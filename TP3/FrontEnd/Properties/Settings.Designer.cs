@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP3.Properties
+namespace FrontEnd.Properties
 {
 
 
