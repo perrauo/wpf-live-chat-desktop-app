@@ -9,6 +9,6 @@
       Title="GroupManagementPage">
 
     <Grid>
-		<TextBlock Text="Group Management" FontSize="32" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<TextBlock Text="Group Management" FontSize="32" FontWeight="Bold" Foreground="#FFED2828" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 	</Grid>
 </Page>
