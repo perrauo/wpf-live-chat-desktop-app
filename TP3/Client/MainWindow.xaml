@@ -3,10 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-		<Frame x:Name="Main"/>
-	</Grid>
+
+        <Frame Name="ConnectionPage" Source="ConnectionPage.xaml"/>
+        <Frame Name="LobbyPage" Source="LobbyPage.xaml"/>
+        <Frame Name="GroupChatPage" Source="GroupChatPage.xaml"/>
+
+    </Grid>
 </Window>

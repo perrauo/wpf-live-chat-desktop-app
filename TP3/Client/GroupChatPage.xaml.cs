@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Client
 {
     /// <summary>
-    /// Interaction logic for ChatPage.xaml
+    /// Interaction logic for GroupManagementPage.xaml
     /// </summary>
-    public partial class ChatPage : Page
+    public partial class GroupChatPage : Page
     {
-        public ChatPage()
+        public GroupChatPage()
         {
             InitializeComponent();
         }

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+
 namespace Client
 {
     /// <summary>
@@ -20,9 +22,27 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ConnectionPage _connectionPage;
+        private LobbyPage _lobbyPage;
+        private GroupChatPage _groupChatPage;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.Loaded += OnMainWindowLoaded;
         }
+
+        private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            List<Page> results = new List<Page>();
+            Utils.FindChildren(results, this);    
+            _connectionPage = (ConnectionPage)results.Find(item => item.GetType() == typeof(Client.ConnectionPage));
+            _lobbyPage = (LobbyPage)results.Find(item => item.GetType() == typeof(Client.LobbyPage));
+            _groupChatPage = (GroupChatPage)results.Find(item => item.GetType() == typeof(Client.GroupChatPage));
+
+            _connectionPage.SetEnabled(true);
+            _lobbyPage.SetEnabled(false);            
+            _groupChatPage.SetEnabled(false);            
+        }        
     }
 }

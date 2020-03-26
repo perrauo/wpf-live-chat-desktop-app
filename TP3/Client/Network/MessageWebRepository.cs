@@ -32,6 +32,11 @@ namespace Client.Network
             throw new NotImplementedException();
         }
 
+        public Message Retrieve(Message obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public Message Update(Message obj)
         {
             throw new NotImplementedException();

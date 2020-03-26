@@ -23,7 +23,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,15 +55,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ChatPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="LobbyPage.xaml.cs">
+      <DependentUpon>LobbyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils.cs" />
     <Page Include="ConnectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GroupManagementPage.xaml">
+    <Page Include="GroupChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LobbyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -75,23 +79,31 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ChatPage.xaml.cs">
-      <DependentUpon>ChatPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ConnectionController.cs" />
     <Compile Include="ConnectionPage.xaml.cs">
       <DependentUpon>ConnectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GroupManagementPage.xaml.cs">
-      <DependentUpon>GroupManagementPage.xaml</DependentUpon>
+    <Compile Include="GroupChatController.cs" />
+    <Compile Include="GroupChatPage.xaml.cs">
+      <DependentUpon>GroupChatPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LobbyController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Member.cs" />
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Model\Message.cs" />
+    <Compile Include="Network\Connection.cs" />
+    <Compile Include="Network\GroupWebRepository.cs" />
+    <Compile Include="Network\IRepository.cs" />
+    <Compile Include="Network\MessageWebRepository.cs" />
+    <Compile Include="Network\UDPClient.cs" />
+    <Compile Include="Network\UDPClientSocket.cs" />
+    <Compile Include="Network\UserWebRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

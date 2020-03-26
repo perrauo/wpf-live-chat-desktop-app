@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Client
 {
     /// <summary>
-    /// Interaction logic for GroupManagementPage.xaml
+    /// Interaction logic for LobbyPage.xaml
     /// </summary>
-    public partial class GroupManagementPage : Page
+    public partial class LobbyPage : Page
     {
-        public GroupManagementPage()
+        public LobbyPage()
         {
             InitializeComponent();
         }

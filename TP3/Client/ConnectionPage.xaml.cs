@@ -22,7 +22,15 @@ namespace Client
     {
         public ConnectionPage()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
+
+        //When login button is pressed, it tries to login user
+        private void OnLoginButtonClicked(object sender, RoutedEventArgs e)
+        {
+            //_vm.TryLogin();
+        }
+
+
     }
 }
