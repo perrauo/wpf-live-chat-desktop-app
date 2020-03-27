@@ -83,9 +83,12 @@ namespace IFT585_TP3.Client
             Utils.FindChildren(pages, this);   
             _connectionPage = (ConnectionPage)pages.Find(item => item.GetType() == typeof(Client.ConnectionPage));
             _connectionPage.OnConnectedHandler += OnConnected;
+            _connectionPage.SetEnabled(true);
 
             _lobbyPage = (LobbyPage)pages.Find(item => item.GetType() == typeof(Client.LobbyPage));
+            _lobbyPage.OnEnterGroupChatHandler += OnEnterGroupChat;
             _lobbyPage.SetEnabled(false);
+
 
             _groupChatPage = (GroupChatPage)pages.Find(item => item.GetType() == typeof(Client.GroupChatPage));
             _groupChatPage.SetEnabled(false);
@@ -97,10 +100,19 @@ namespace IFT585_TP3.Client
 
         public void OnConnected(Network.Connection conn)
         {
-            _connection = conn;
+            _connection = conn;            
             _connectionPage.SetEnabled(false);
             _lobbyPage.SetEnabled(true);
+            _groupChatPage.SetEnabled(false);
         }
+
+        public void OnEnterGroupChat(Model.Group group)
+        {            
+            _connectionPage.SetEnabled(false);
+            _lobbyPage.SetEnabled(false);
+            _groupChatPage.SetEnabled(true);
+        }
+
 
         private void notificationButton_Click(object sender, RoutedEventArgs e)
         {
