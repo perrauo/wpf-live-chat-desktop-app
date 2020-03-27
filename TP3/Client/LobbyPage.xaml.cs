@@ -20,9 +20,17 @@ namespace IFT585_TP3.Client
     /// </summary>
     public partial class LobbyPage : Page
     {
+        private Network.Connection _connection;
+        private LobbyController _lobbyController = new LobbyController();
+
         public LobbyPage()
         {
             InitializeComponent();
+        }
+
+        public void Open(Network.Connection conn)
+        {            
+            _connection = conn;
         }
     }
 }
