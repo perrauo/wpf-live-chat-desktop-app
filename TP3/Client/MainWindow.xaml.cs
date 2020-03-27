@@ -79,7 +79,7 @@ namespace IFT585_TP3.Client
 
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
         {            
-            List<Page> pages = new List<Page>();
+            List<BasePage> pages = new List<BasePage>();
             Utils.FindChildren(pages, this);   
             _connectionPage = (ConnectionPage)pages.Find(item => item.GetType() == typeof(Client.ConnectionPage));
             _connectionPage.OnConnectedHandler += OnConnected;
@@ -87,10 +87,11 @@ namespace IFT585_TP3.Client
 
             _lobbyPage = (LobbyPage)pages.Find(item => item.GetType() == typeof(Client.LobbyPage));
             _lobbyPage.OnEnterGroupChatHandler += OnEnterGroupChat;
+            _lobbyPage.OnLogoutHandler += OnLogout;
             _lobbyPage.SetEnabled(false);
 
-
             _groupChatPage = (GroupChatPage)pages.Find(item => item.GetType() == typeof(Client.GroupChatPage));
+            _groupChatPage.OnLobbyHandler += OnLobby;
             _groupChatPage.SetEnabled(false);
 
 
@@ -98,21 +99,34 @@ namespace IFT585_TP3.Client
             NotificationService.OnNotificationStaticHandler += OnNotification;
         }
 
+        private void OnLogout()
+        {            
+            _connectionPage.Open(null);
+            _lobbyPage.Close();
+            _groupChatPage.Close();
+        }
+
+        private void OnLobby()
+        {
+            _connectionPage.Close();
+            _lobbyPage.Open(_connection);
+            _groupChatPage.Close();
+        }
+
         public void OnConnected(Network.Connection conn)
         {
-            _connection = conn;            
-            _connectionPage.SetEnabled(false);
-            _lobbyPage.SetEnabled(true);
-            _groupChatPage.SetEnabled(false);
+            _connection = conn;
+            _connectionPage.Close();
+            _lobbyPage.Open(conn);
+            _groupChatPage.Close();            
         }
 
         public void OnEnterGroupChat(Model.Group group)
-        {            
-            _connectionPage.SetEnabled(false);
-            _lobbyPage.SetEnabled(false);
-            _groupChatPage.SetEnabled(true);
+        {
+            _connectionPage.Close();
+            _lobbyPage.Close();
+            _groupChatPage.Open(_connection);
         }
-
 
         private void notificationButton_Click(object sender, RoutedEventArgs e)
         {

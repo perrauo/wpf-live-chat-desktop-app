@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BaseToastControl.cs" />
+    <Compile Include="BasePage.cs" />
     <Compile Include="SuccessToastControl.xaml.cs">
       <DependentUpon>SuccessToastControl.xaml</DependentUpon>
     </Compile>

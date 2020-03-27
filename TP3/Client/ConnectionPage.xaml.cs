@@ -18,7 +18,7 @@ namespace IFT585_TP3.Client
     /// <summary>
     /// Interaction logic for ConnectionPage.xaml
     /// </summary>
-    public partial class ConnectionPage : Page
+    public partial class ConnectionPage : BasePage
     {
         private ConnectionController _connectionController = new ConnectionController();
 

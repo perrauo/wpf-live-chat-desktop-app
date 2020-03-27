@@ -18,6 +18,8 @@ namespace IFT585_TP3.Client
 {  
     public partial class SuccessToastControl : BaseToastControl
     {
+        private ListBox _chatFeedListBox;
+
         public SuccessToastControl()
         {
             InitializeComponent();

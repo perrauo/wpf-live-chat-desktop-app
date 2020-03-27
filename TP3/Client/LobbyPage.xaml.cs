@@ -29,9 +29,8 @@ namespace IFT585_TP3.Client
     /// <summary>
     /// Interaction logic for LobbyPage.xaml
     /// </summary>
-    public partial class LobbyPage : Page
-    {
-        private Network.Connection _connection;
+    public partial class LobbyPage : BasePage
+    {        
         private LobbyController _lobbyController = new LobbyController();
         private ListBox _groupsListBox;
 
@@ -44,12 +43,6 @@ namespace IFT585_TP3.Client
         {
             InitializeComponent();
             this.Loaded += OnLoaded;
-        }
-
-        public void Open(Network.Connection conn)
-        {
-            _connection = conn;
-            PopulateGroupList();
         }
 
         private void PopulateGroupList()

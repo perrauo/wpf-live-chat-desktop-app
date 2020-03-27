@@ -1,58 +1,116 @@
-﻿<Page
+﻿<local:BasePage
     x:Class="IFT585_TP3.Client.GroupChatPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:IFT585_TP3.Client"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Background="#FF969696" d:DesignHeight="264.8" d:DesignWidth="346.267">
+    mc:Ignorable="d" 
+    Background="#FF969696" 
+    d:DesignHeight="264.8" 
+    d:DesignWidth="346.267">
 
-    <Grid Height="265" VerticalAlignment="Bottom" Margin="0,0,0.4,-0.2">
-        <Grid x:Name="contentRoot" Margin="70,10,70,10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid x:Name="titleGrid" Grid.Row="0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="DarkGray" >
+            <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32">
+                <Button Content="Send invite" Width="128"/>
+            </DockPanel>
+            <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32">
+                <Button Click="OnLobbyButtonClicked" Content="Return to lobby" Width="128"/>
+            </DockPanel>
+        </Grid>
+        <Grid Grid.Row="1" Height="265" VerticalAlignment="Bottom" Margin="0,0,0.4,-0.2">
+            <Grid x:Name="contentRoot" Margin="70,10,70,10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"/>
-            </Grid>
-            <Grid Name="contentGrid"  Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="0,10,0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Group:" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="1" Text="GroupName" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Text="Error" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red" />
-                    <TextBlock Grid.Column="3" Text="Username" VerticalAlignment="Center" />
-                    <Button Grid.Column="4" Content="Exit" Margin="10,0,20,0" VerticalAlignment="Center" />
+                <Grid x:Name="titleGrid" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"/>
                 </Grid>
-                <Grid Grid.Row="1" Margin="0,10,0,5">
-                    <TextBox Name="ChatFeedTextBox" Grid.Column="0" Text="ChatFeed" />
-                </Grid>
-                <Grid Grid.Row="2" Margin="0,5,0,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Text="Message" />
-                    <Button Grid.Column="1" Content="Send" Margin="20,0,20,0" />
+                <Grid Name="contentGrid"  Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="0,10,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Group:" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="GroupName" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Text="Error" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red" />
+                        <TextBlock Grid.Column="3" Text="Username" VerticalAlignment="Center" />
+                        <Button Grid.Column="4" Content="Exit" Margin="10,0,20,0" VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0,10,0,5">
+                        <ScrollViewer Name="ChatFeedScrollViewer">
+                            <ListBox                
+                        HorizontalContentAlignment="Left"
+                        Name="ChatFeedListBox"                 
+                        Background="White">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--Username section-->
+                                            <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}: ">
+                                                        <Binding Path="Username" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+
+                                            <TextBlock Grid.Column="1" HorizontalAlignment="Left">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}">
+                                                        <Binding Path="Content" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                                <ListBox.Items>
+                                    <!--<local:GroupListBoxItem>
+                        <local:GroupListBoxItem.Group>
+                            <model:Group NumMembers="56" NumActiveMembers="4" GroupName="Good"/>
+                        </local:GroupListBoxItem.Group>
+                    </local:GroupListBoxItem>-->
+                                </ListBox.Items>
+                            </ListBox>
+                        </ScrollViewer>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,5,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Name="MessageInputTextBox"  Grid.Column="0" Text="Message" />
+                        <Button Grid.Column="1" Content="Send" Margin="20,0,20,0" Click="OnSendButtonClicked" />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
     </Grid>
-</Page>
+</local:BasePage>
