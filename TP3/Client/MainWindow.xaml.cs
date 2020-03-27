@@ -26,6 +26,8 @@ namespace IFT585_TP3.Client
         private LobbyPage _lobbyPage;
         private GroupChatPage _groupChatPage;
 
+        private ToastControl _toastControl;
+
         private Network.Connection _connection;
 
         public MainWindow()
@@ -36,17 +38,21 @@ namespace IFT585_TP3.Client
 
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
         {
-            List<Page> results = new List<Page>();
-            Utils.FindChildren(results, this);    
-            _connectionPage = (ConnectionPage)results.Find(item => item.GetType() == typeof(Client.ConnectionPage));
-            _lobbyPage = (LobbyPage)results.Find(item => item.GetType() == typeof(Client.LobbyPage));
-            _groupChatPage = (GroupChatPage)results.Find(item => item.GetType() == typeof(Client.GroupChatPage));
+            List<Page> pages = new List<Page>();
+            Utils.FindChildren(pages, this);    
+            _connectionPage = (ConnectionPage)pages.Find(item => item.GetType() == typeof(Client.ConnectionPage));
+            _lobbyPage = (LobbyPage)pages.Find(item => item.GetType() == typeof(Client.LobbyPage));
+            _groupChatPage = (GroupChatPage)pages.Find(item => item.GetType() == typeof(Client.GroupChatPage));
+            //_connectionPage.SetEnabled(true);
+            //_lobbyPage.SetEnabled(false);
+            //_groupChatPage.SetEnabled(false);
+            //_connectionPage.OnConnectedHandler += OnConnected;
 
-            _connectionPage.SetEnabled(true);
-            _lobbyPage.SetEnabled(false);            
-            _groupChatPage.SetEnabled(false);
+            List<ToastControl> toasts = new List<ToastControl>();
+            Utils.FindChildren(toasts, this);
+            _toastControl = (ToastControl)toasts.Find(item => item.GetType() == typeof(Client.ToastControl));
 
-            _connectionPage.OnConnectedHandler += OnConnected;
+            _toastControl.IsToastVisible = true;
         }
 
         public void OnConnected(Network.Connection conn)

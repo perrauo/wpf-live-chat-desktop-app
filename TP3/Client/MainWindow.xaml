@@ -10,32 +10,17 @@
         Height="450"
         Width="800"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="/ToastStyle.xaml"/>
+    </Window.Resources>
     <Grid>
-        <DockPanel>
-            <!--<Grid
-                DockPanel.Dock="Top" 
-                >
-                <ToolBar                 
-                Height="32" 
-                HorizontalAlignment="Right" 
-                ToolBarTray.IsLocked="True"
-                Grid.Row="1">
-                    <Button 
-                    x:Name="NotificationsButton"
-                    DockPanel.Dock="Right" 
-                    HorizontalAlignment="Right"
-                    ToolTip="See new notifications"                 
-                    ToolTipService.Placement="Top">
-                        <Image Source="Resources/bell.png" Width="16" Height="16"/>
-                    </Button>
-                    
-                </ToolBar>
-            </Grid>-->
-            <Grid>
-                <Frame Name="ConnectionPage" Source="ConnectionPage.xaml"/>
-                <Frame Name="LobbyPage" Source="LobbyPage.xaml"/>
-                <Frame Name="GroupChatPage" Source="ConnectionPage.xaml"/>
-            </Grid>
-        </DockPanel>
+        <Frame Name="ConnectionPage" Source="ConnectionPage.xaml" Panel.ZIndex="0"/>
+        <Frame Name="LobbyPage" Source="LobbyPage.xaml" Panel.ZIndex="0"/>
+        <Frame Name="GroupChatPage" Source="ConnectionPage.xaml" Panel.ZIndex="0"/>
+        <IFT585:ToastControl Style="{StaticResource ToastStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="1024" Height="256" Panel.ZIndex="100" Margin="0,0,0,16" BorderBrush="#FF5A5959" Background="#FF575757" Foreground="White" OpacityMask="Black" FontWeight="Bold" RenderTransformOrigin="0.5,0.5">
+            <IFT585:ToastControl.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </IFT585:ToastControl.RenderTransform>
+        </IFT585:ToastControl>
     </Grid>
 </Window>
