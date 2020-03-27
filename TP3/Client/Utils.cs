@@ -16,7 +16,7 @@ namespace IFT585_TP3.Client
 {
     public static class Utils
     {
-        internal static void FindChildren<T>(List<T> results, DependencyObject startNode) where T : DependencyObject
+        internal static IEnumerable<T> FindChildren<T>(List<T> results, DependencyObject startNode) where T : DependencyObject
         {
             int count = VisualTreeHelper.GetChildrenCount(startNode);
             for (int i = 0; i < count; i++)
@@ -29,6 +29,8 @@ namespace IFT585_TP3.Client
                 }
                 FindChildren<T>(results, current);
             }
+
+            return results;
         }
 
         public static void SetEnabled(this System.Windows.UIElement elem, bool value)

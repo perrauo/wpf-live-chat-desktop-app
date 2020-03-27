@@ -22,13 +22,14 @@ namespace IFT585_TP3.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string RootGridString = "Root";
+
         private ConnectionPage _connectionPage;
         private LobbyPage _lobbyPage;
         private GroupChatPage _groupChatPage;
-
         private ToastControl _toastControl;
-
         private Network.Connection _connection;
+        private Grid _rootGrid;
 
         public MainWindow()
         {
@@ -36,23 +37,60 @@ namespace IFT585_TP3.Client
             this.Loaded += OnMainWindowLoaded;
         }
 
-        private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+        public void OnNotification(NotificationType type, string message)
         {
+            ToastControl toast = null;
+            switch (type)
+            {
+                case NotificationType.GroupRequest:
+                    toast = new GroupRequestToastControl()
+                    {
+                        Style = this.FindResource("GroupRequestToastStyle") as Style,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Width = 256 * 2,
+                        Height = 32,                        
+                        BorderBrush = Brushes.DarkGray,
+                        Background = Brushes.DarkGray,
+                        Foreground = Brushes.White,           
+                        RenderTransform = new TranslateTransform(),
+                    };
+                    break;
+                case NotificationType.Error:
+                    toast = new ErrorToastControl()
+                    {
+                        Style = this.FindResource("ErrorToastStyle") as Style,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Width = 256 * 2,
+                        Height = 32,                        
+                        BorderBrush = Brushes.DarkGray,
+                        Background = Brushes.DarkGray,
+                        Foreground = Brushes.White,                                    
+                        RenderTransform = new TranslateTransform(),
+                    };
+                    break;
+            }
+
+            if (toast != null)
+            {
+                toast.Animate();
+                toast.OnRemovedHandler += (x) => _rootGrid.Children.Remove(x);
+                _rootGrid.Children.Add(toast);
+            }
+        }        
+
+        private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+        {            
             List<Page> pages = new List<Page>();
-            Utils.FindChildren(pages, this);    
+            Utils.FindChildren(pages, this);   
             _connectionPage = (ConnectionPage)pages.Find(item => item.GetType() == typeof(Client.ConnectionPage));
             _lobbyPage = (LobbyPage)pages.Find(item => item.GetType() == typeof(Client.LobbyPage));
             _groupChatPage = (GroupChatPage)pages.Find(item => item.GetType() == typeof(Client.GroupChatPage));
-            //_connectionPage.SetEnabled(true);
-            //_lobbyPage.SetEnabled(false);
-            //_groupChatPage.SetEnabled(false);
-            //_connectionPage.OnConnectedHandler += OnConnected;
 
-            List<ToastControl> toasts = new List<ToastControl>();
-            Utils.FindChildren(toasts, this);
-            _toastControl = (ToastControl)toasts.Find(item => item.GetType() == typeof(Client.ToastControl));
-
-            _toastControl.IsToastVisible = true;
+            _rootGrid = Utils.FindChildren(new List<Grid>(), this).FirstOrDefault();
+            NotificationService.OnNotificationStaticHandler += OnNotification;
+            NotificationService.SendNotification(NotificationType.Error, "Hello");
         }
 
         public void OnConnected(Network.Connection conn)

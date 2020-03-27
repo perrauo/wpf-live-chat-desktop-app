@@ -7,43 +7,53 @@
             <SolidColorBrush x:Key="Toast.Static.BorderBrush" Color="Gray" />
             <SolidColorBrush x:Key="Toast.Static.Foreground" Color="DimGray" />
         </Style.Resources>
-        <Setter Property="Background" Value="{StaticResource ToastControl.Static.Background}" />
-        <Setter Property="BorderBrush" Value="{StaticResource ToastControl.Static.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Foreground" Value="{StaticResource ToastControl.Static.Foreground}" />
         <Setter Property="FontFamily" Value="Segoe UI Light" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="RenderTransformOrigin">
-            <Setter.Value>
-                <Point X="0" Y="0"/>
-            </Setter.Value>
-        </Setter>
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,0,10" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <Style TargetType="{x:Type local:GroupRequestToastControl}" x:Key="GroupRequestToastStyle" BasedOn="{StaticResource ToastStyle}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:ToastControl}">
-                    <Grid x:Name="template_Root">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="2"  HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="0,0,0,20">
-                            <StackPanel Orientation="Horizontal">
-                                <Path x:Name="path" Margin="6,0,0,0" Fill="{TemplateBinding Foreground}"  Stretch="Uniform" Width="12" Height="12" Data="{TemplateBinding ImageGeometry}" />
-                                <TextBlock  Text="{TemplateBinding Text}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" Padding="5" />
-                            </StackPanel>
-                        </Border>
+                <ControlTemplate>
+                    <Grid Panel.ZIndex="-1000" Background="Gray">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <TextBlock Margin="4,4,4,4" FontWeight="ExtraBold">Group Request:</TextBlock>
+                            <TextBlock Margin="4,4,4,4">GroupName</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Margin="4,4,4,4">Accept</Button>
+                            <Button Margin="4,4,4,4">Decline</Button>
+                        </StackPanel>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ToastIcon,RelativeSource={RelativeSource Self}}" Value="None">
-                            <Setter TargetName="path" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type local:ErrorToastControl}" x:Key="ErrorToastStyle" BasedOn="{StaticResource ToastStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid Panel.ZIndex="-1000" Background="Gray">
+                        <TextBox>
+                            Error:
+                        </TextBox>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Margin="4,4,4,4">Close</Button>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
 </ResourceDictionary>

@@ -13,14 +13,11 @@
     <Window.Resources>
         <ResourceDictionary Source="/ToastStyle.xaml"/>
     </Window.Resources>
-    <Grid>
+    <Grid Name="Root">
         <Frame Name="ConnectionPage" Source="ConnectionPage.xaml" Panel.ZIndex="0"/>
         <Frame Name="LobbyPage" Source="LobbyPage.xaml" Panel.ZIndex="0"/>
         <Frame Name="GroupChatPage" Source="ConnectionPage.xaml" Panel.ZIndex="0"/>
-        <IFT585:ToastControl Style="{StaticResource ToastStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="1024" Height="256" Panel.ZIndex="100" Margin="0,0,0,16" BorderBrush="#FF5A5959" Background="#FF575757" Foreground="White" OpacityMask="Black" FontWeight="Bold" RenderTransformOrigin="0.5,0.5">
-            <IFT585:ToastControl.RenderTransform>
-                <TranslateTransform X="0" Y="0"/>
-            </IFT585:ToastControl.RenderTransform>
-        </IFT585:ToastControl>
+        <!--<IFT585:ToastControl Style="{StaticResource ToastStyle}" Height="54" Width="128" Panel.ZIndex="-1000" Background="#FF666666" BorderBrush="#FFA6A6A6" Margin="333,0,332.6,10"/>-->
+
     </Grid>
 </Window>
