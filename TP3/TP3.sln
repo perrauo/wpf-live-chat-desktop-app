@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{DBE2D275-0D5D-4E3C-878A-E92AD5BF3A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "ConsoleApp1\Common.csproj", "{309F6383-68B6-460D-B18F-4ECF37BB270A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{309F6383-68B6-460D-B18F-4ECF37BB270A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
