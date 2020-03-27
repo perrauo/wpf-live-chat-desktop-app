@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <DockPanel>
-            <Grid
+            <!--<Grid
                 DockPanel.Dock="Top" 
                 >
                 <ToolBar                 
@@ -30,7 +30,7 @@
                     </Button>
                     
                 </ToolBar>
-            </Grid>
+            </Grid>-->
             <Grid>
                 <Frame Name="ConnectionPage" Source="ConnectionPage.xaml"/>
                 <Frame Name="LobbyPage" Source="LobbyPage.xaml"/>
