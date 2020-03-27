@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client
+namespace IFT585_TP3.Client
 {
     /// <summary>
     /// Interaction logic for LobbyPage.xaml

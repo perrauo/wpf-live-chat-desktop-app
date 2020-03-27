@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client
+namespace IFT585_TP3.Client
 {
     public class LobbyController
     {

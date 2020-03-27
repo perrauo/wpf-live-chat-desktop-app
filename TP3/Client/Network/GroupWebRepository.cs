@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Client.Model;
+using IFT585_TP3.Client.Model;
 
-namespace Client.Network
+namespace IFT585_TP3.Client.Network
 {
     public class GroupWebRepository : IRepository<Group>
     {

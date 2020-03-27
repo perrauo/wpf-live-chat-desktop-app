@@ -7,21 +7,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Client
+using System;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace IFT585_TP3.Client
 {
-    public enum Status
-    {
-        ConnectionError,
-        NonExistentItem,
-        Success
-    }
-
-    public class Result<T>
-    {
-        public Status Status { get; set; }
-        public T Return { get; set; } 
-    }
-
     public static class Utils
     {
         internal static void FindChildren<T>(List<T> results, DependencyObject startNode) where T : DependencyObject
@@ -42,7 +34,15 @@ namespace Client
         public static void SetEnabled(this System.Windows.UIElement elem, bool value)
         {
             elem.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-            elem.IsEnabled = value;           
+            elem.IsEnabled = value;
         }
+
+        public const string ValidUsernamePattern = "^[[A-Z]|[a-z]][[A-Z]|[a-z]|\\d|[_]]{7,29}$";
+        public static bool IsValidUserName(string username) => Regex.IsMatch(username, ValidUsernamePattern);
+
+        public const string ValidUserPasswordPattern = "^[[A-Z]|[a-z]][[A-Z]|[a-z]|\\d|[_]]{7,29}$";
+        public static bool IsValidUserPassword(string pass) => Regex.IsMatch(pass, ValidUserPasswordPattern);
+
     }
+
 }

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 
 
-namespace Client
+namespace IFT585_TP3.Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,6 +25,8 @@ namespace Client
         private ConnectionPage _connectionPage;
         private LobbyPage _lobbyPage;
         private GroupChatPage _groupChatPage;
+
+        private Network.Connection _connection;
 
         public MainWindow()
         {
@@ -42,7 +44,17 @@ namespace Client
 
             _connectionPage.SetEnabled(true);
             _lobbyPage.SetEnabled(false);            
-            _groupChatPage.SetEnabled(false);            
-        }        
+            _groupChatPage.SetEnabled(false);
+
+            _connectionPage.OnConnectedHandler += OnConnected;
+        }
+
+        public void OnConnected(Network.Connection conn)
+        {
+            _connection = conn;
+            _connectionPage.SetEnabled(false);
+            _lobbyPage.SetEnabled(true);
+        }
+
     }
 }
