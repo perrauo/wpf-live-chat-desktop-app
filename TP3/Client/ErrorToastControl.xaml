@@ -1,0 +1,24 @@
+﻿<local:BaseToastControl x:Class="IFT585_TP3.Client.ErrorToastControl"
+             SnapsToDevicePixels="True"                          
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IFT585_TP3.Client"
+             Width="256" 
+             Height="32">
+
+    <UserControl.RenderTransform>
+        <TranslateTransform />
+    </UserControl.RenderTransform>
+    
+    <Grid Background="#FFFF7676">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock Margin="4,4,4,4" FontWeight="ExtraBold">Error:</TextBlock>
+            <TextBlock Margin="4,4,4,4">Error Message</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Click="OnCloseButtonClicked" Margin="4,4,4,4">Close</Button>
+        </StackPanel>
+    </Grid>
+</local:BaseToastControl>

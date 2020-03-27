@@ -59,8 +59,10 @@ namespace IFT585_TP3.Client
                 case Common.Status.Login_InvalidUsernameError:
                 case Common.Status.Login_AlreadyExistUsernameError:
                     //TODO
+                    NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Error, NotificationService.UnknownErrorMessage);
                     return;
                 case Common.Status.Success:
+                    NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Success, NotificationService.LoginSuccessMessage);
                     OnConnectedHandler?.Invoke(res.Return);
                     break;
             }

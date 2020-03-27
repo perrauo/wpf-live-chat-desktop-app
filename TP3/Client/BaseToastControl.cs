@@ -19,13 +19,13 @@ namespace IFT585_TP3.Client
     /// <summary>
     /// Interaction logic for ToastControl.xaml
     /// </summary>
-    public class ToastControl : UserControl
+    public class BaseToastControl : UserControl
     {
-        public Action<ToastControl> OnRemovedHandler { get; set; }
+        public Action<BaseToastControl> OnRemovedHandler { get; set; }
 
-        static ToastControl()
+        static BaseToastControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ToastControl), new FrameworkPropertyMetadata(typeof(ToastControl)));
+            //DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseToastControl), new FrameworkPropertyMetadata(typeof(BaseToastControl)));
         }
 
         public override void OnApplyTemplate()
@@ -35,16 +35,16 @@ namespace IFT585_TP3.Client
         }
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(ToastControl), new PropertyMetadata("Sample Text"));
-       
+            DependencyProperty.Register("Text", typeof(string), typeof(BaseToastControl), new PropertyMetadata("Sample Text"));
+
         public static readonly DependencyProperty IsToastVisibleProperty =
-            DependencyProperty.Register("IsToastVisible", typeof(bool), typeof(ToastControl), new PropertyMetadata(false, OnIsToastVisibleChanged));
+            DependencyProperty.Register("IsToastVisible", typeof(bool), typeof(BaseToastControl), new PropertyMetadata(false, OnIsToastVisibleChanged));
 
         public static readonly DependencyProperty DurationProperty =
-            DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(ToastControl), new PropertyMetadata(TimeSpan.FromSeconds(10), OnDurationChanged));
+            DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(BaseToastControl), new PropertyMetadata(TimeSpan.FromSeconds(10), OnDurationChanged));
 
         public static readonly DependencyProperty ImageGeometryProperty =
-            DependencyProperty.Register("ImageGeometry", typeof(Geometry), typeof(ToastControl));
+            DependencyProperty.Register("ImageGeometry", typeof(Geometry), typeof(BaseToastControl));
 
         public string Text
         {
@@ -53,7 +53,7 @@ namespace IFT585_TP3.Client
         }
 
         public void Animate()
-        {                     
+        {
             SetValue(IsToastVisibleProperty, true);
             ChangeVisualState();
         }
@@ -72,24 +72,24 @@ namespace IFT585_TP3.Client
 
         private static void OnDurationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = (ToastControl)d;
+            var control = (BaseToastControl)d;
             var value = (TimeSpan)e.NewValue;
             control.Duration = value;
         }
 
         private static void OnIsToastVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var c = (ToastControl)d;
+            var c = (BaseToastControl)d;
             var value = (bool)e.NewValue;
             //c.IsToastVisible = value;
         }
 
         private void ChangeVisualState()
         {
-            
+
             Opacity = 1;
 
-            DoubleAnimation da = new DoubleAnimation { From = 64, To = 0, Duration = TimeSpan.FromSeconds(.5f) };
+            DoubleAnimation da = new DoubleAnimation { From = 64, To = -16, Duration = TimeSpan.FromSeconds(.5f) };
 
             CubicEase cubicEase = new CubicEase();
             cubicEase.EasingMode = EasingMode.EaseInOut;
@@ -97,7 +97,7 @@ namespace IFT585_TP3.Client
             da.EasingFunction = cubicEase;
 
             //da.Completed += (sender, e) => IsToastVisible = false;
-            RenderTransform.BeginAnimation(TranslateTransform.YProperty, da);            
+            RenderTransform.BeginAnimation(TranslateTransform.YProperty, da);
         }
 
         public enum ToastIconType
@@ -105,44 +105,6 @@ namespace IFT585_TP3.Client
             None = 0,
             Information = 1,
             Warning = 2
-        }
-    }
-
-    public class GroupRequestToastControl : ToastControl
-    {
-        static GroupRequestToastControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupRequestToastControl), new FrameworkPropertyMetadata(typeof(GroupRequestToastControl)));
-        }
-    }
-
-    public class AdminRequestToastControl : ToastControl
-    {
-        static AdminRequestToastControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(AdminRequestToastControl), new FrameworkPropertyMetadata(typeof(AdminRequestToastControl)));
-        }
-    }
-
-    public class SuccessToastControl : ToastControl
-    {
-        static SuccessToastControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SuccessToastControl), new FrameworkPropertyMetadata(typeof(SuccessToastControl)));
-        }
-    }
-
-    public class ErrorToastControl : ToastControl
-    {
-        static ErrorToastControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ErrorToastControl), new FrameworkPropertyMetadata(typeof(ErrorToastControl)));
-        }
-
-        //When login button is pressed, it tries to login user
-        private void OnCloseButtonClicked(object sender, RoutedEventArgs e)
-        {
-            OnRemovedHandler?.Invoke(this);
         }
     }
 }

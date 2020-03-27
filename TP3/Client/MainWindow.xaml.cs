@@ -27,7 +27,7 @@ namespace IFT585_TP3.Client
         private ConnectionPage _connectionPage;
         private LobbyPage _lobbyPage;
         private GroupChatPage _groupChatPage;
-        private ToastControl _toastControl;
+        private BaseToastControl _toastControl;
         private Network.Connection _connection;
         private Grid _rootGrid;
 
@@ -39,35 +39,32 @@ namespace IFT585_TP3.Client
 
         public void OnNotification(NotificationType type, string message)
         {
-            ToastControl toast = null;
+            BaseToastControl toast = null;
             switch (type)
             {
                 case NotificationType.GroupRequest:
                     toast = new GroupRequestToastControl()
                     {
-                        Style = this.FindResource("GroupRequestToastStyle") as Style,
                         VerticalAlignment = VerticalAlignment.Bottom,
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        Width = 256 * 2,
-                        Height = 32,                        
-                        BorderBrush = Brushes.DarkGray,
-                        Background = Brushes.DarkGray,
-                        Foreground = Brushes.White,           
                         RenderTransform = new TranslateTransform(),
                     };
                     break;
                 case NotificationType.Error:
                     toast = new ErrorToastControl()
                     {
-                        Style = this.FindResource("ErrorToastStyle") as Style,
                         VerticalAlignment = VerticalAlignment.Bottom,
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        Width = 256 * 2,
-                        Height = 32,                        
-                        BorderBrush = Brushes.DarkGray,
-                        Background = Brushes.DarkGray,
-                        Foreground = Brushes.White,                                    
                         RenderTransform = new TranslateTransform(),
+                    };
+                    break;
+                case NotificationType.Success:
+                    toast = new SuccessToastControl()
+                    {
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        RenderTransform = new TranslateTransform(),
+                        Text = message
                     };
                     break;
             }
@@ -85,12 +82,17 @@ namespace IFT585_TP3.Client
             List<Page> pages = new List<Page>();
             Utils.FindChildren(pages, this);   
             _connectionPage = (ConnectionPage)pages.Find(item => item.GetType() == typeof(Client.ConnectionPage));
+            _connectionPage.OnConnectedHandler += OnConnected;
+
             _lobbyPage = (LobbyPage)pages.Find(item => item.GetType() == typeof(Client.LobbyPage));
+            _lobbyPage.SetEnabled(false);
+
             _groupChatPage = (GroupChatPage)pages.Find(item => item.GetType() == typeof(Client.GroupChatPage));
+            _groupChatPage.SetEnabled(false);
+
 
             _rootGrid = Utils.FindChildren(new List<Grid>(), this).FirstOrDefault();
             NotificationService.OnNotificationStaticHandler += OnNotification;
-            NotificationService.SendNotification(NotificationType.Error, "Hello");
         }
 
         public void OnConnected(Network.Connection conn)
