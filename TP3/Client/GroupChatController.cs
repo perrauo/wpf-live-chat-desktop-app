@@ -16,8 +16,25 @@ namespace IFT585_TP3.Client
             return new Common.Result<object>();
         }
 
-        public void SendAdminRequest(String groupName) {
+        public void SendAdminRequest(string username) {
         }
+
+        public void DeclineAdminRequest(string username)
+        {
+
+        }
+
+
+        // Moved from LobbyController
+        // TODO: Change UML
+        public IEnumerable<Model.User> GetConnectUsers(string groupname)
+        {
+            return null;
+        }
+
+
+
+
 
     }
 }

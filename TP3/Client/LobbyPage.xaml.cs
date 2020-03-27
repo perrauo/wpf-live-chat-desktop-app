@@ -22,15 +22,35 @@ namespace IFT585_TP3.Client
     {
         private Network.Connection _connection;
         private LobbyController _lobbyController = new LobbyController();
+        private ListBox _groupsListBox;
+
+        public const string GroupsListBoxString = "GroupsListBox";
+
 
         public LobbyPage()
         {
             InitializeComponent();
+            this.Loaded += OnLoaded;
         }
 
         public void Open(Network.Connection conn)
-        {            
+        {
             _connection = conn;
+            PopulateGroupList();
         }
+
+        private void PopulateGroupList()
+        {
+            //_groupsListBox.
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            List<ListBox> results = new List<ListBox>();
+            Utils.FindChildren(results, this);
+            _groupsListBox = results.Find(item => item.Name.Equals(GroupsListBoxString));
+        }
+
     }
 }
+

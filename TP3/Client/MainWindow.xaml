@@ -1,4 +1,6 @@
-﻿<Window x:Class="IFT585_TP3.Client.MainWindow"
+﻿<Window         
+        x:Class="IFT585_TP3.Client.MainWindow"
+        xmlns:IFT585="clr-namespace:IFT585_TP3.Client;assembly="
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,10 +11,31 @@
         Width="800"
         WindowStartupLocation="CenterScreen">
     <Grid>
-
-        <Frame Name="ConnectionPage" Source="ConnectionPage.xaml"/>
-        <Frame Name="LobbyPage" Source="LobbyPage.xaml"/>
-        <Frame Name="GroupChatPage" Source="GroupChatPage.xaml"/>
-
+        <DockPanel>
+            <Grid
+                DockPanel.Dock="Top" 
+                >
+                <ToolBar                 
+                Height="32" 
+                HorizontalAlignment="Right" 
+                ToolBarTray.IsLocked="True"
+                Grid.Row="1">
+                    <Button 
+                    x:Name="NotificationsButton"
+                    DockPanel.Dock="Right" 
+                    HorizontalAlignment="Right"
+                    ToolTip="See new notifications"                 
+                    ToolTipService.Placement="Top">
+                        <Image Source="Resources/bell.png" Width="16" Height="16"/>
+                    </Button>
+                    
+                </ToolBar>
+            </Grid>
+            <Grid>
+                <Frame Name="ConnectionPage" Source="ConnectionPage.xaml"/>
+                <Frame Name="LobbyPage" Source="LobbyPage.xaml"/>
+                <Frame Name="GroupChatPage" Source="ConnectionPage.xaml"/>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>

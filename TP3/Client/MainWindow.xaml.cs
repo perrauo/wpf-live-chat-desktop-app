@@ -30,7 +30,7 @@ namespace IFT585_TP3.Client
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
             this.Loaded += OnMainWindowLoaded;
         }
 
@@ -54,6 +54,14 @@ namespace IFT585_TP3.Client
             _connection = conn;
             _connectionPage.SetEnabled(false);
             _lobbyPage.SetEnabled(true);
+        }
+
+        private void notificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            //clear_all();
+            //named.Children.Add(new MainNotificationPage());
+            //named
+
         }
 
     }

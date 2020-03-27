@@ -33,6 +33,8 @@ namespace IFT585_TP3.Client
 
         public static void SetEnabled(this System.Windows.UIElement elem, bool value)
         {
+            if (elem == null) return;
+
             elem.Visibility = value ? Visibility.Visible : Visibility.Hidden;
             elem.IsEnabled = value;
         }

@@ -8,5 +8,10 @@ namespace IFT585_TP3.Client
 {
     public class LobbyController
     {
+        private Network.GroupWebRepository _groupRepository = new Network.GroupWebRepository();
+        private Network.UserWebRepository _userRepository = new Network.UserWebRepository();
+
+
+
     }
 }
