@@ -57,50 +57,50 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BaseToastControl.cs" />
-    <Compile Include="BasePage.cs" />
-    <Compile Include="QuestionDialog.xaml.cs">
+    <Compile Include="Views\Components\Toasts\BaseToastControl.cs" />
+    <Compile Include="Views\BasePage.cs" />
+    <Compile Include="Views\Components\Dialogs\QuestionDialog.xaml.cs">
       <DependentUpon>QuestionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SuccessToastControl.xaml.cs">
+    <Compile Include="Views\Components\Toasts\SuccessToastControl.xaml.cs">
       <DependentUpon>SuccessToastControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GroupRequestToastControl.xaml.cs">
+    <Compile Include="Views\Components\Toasts\GroupRequestToastControl.xaml.cs">
       <DependentUpon>GroupRequestToastControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LobbyPage.xaml.cs">
+    <Compile Include="Views\Lobby\LobbyPage.xaml.cs">
       <DependentUpon>LobbyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NotificationService.cs" />
-    <Compile Include="ErrorToastControl.xaml.cs">
+    <Compile Include="Views\NotificationService.cs" />
+    <Compile Include="Views\Components\Toasts\ErrorToastControl.xaml.cs">
       <DependentUpon>ErrorToastControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils.cs" />
-    <Page Include="ConnectionPage.xaml">
+    <Compile Include="Utils\Utils.cs" />
+    <Page Include="Views\Login\ConnectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="QuestionDialog.xaml">
+    <Page Include="Views\Components\Dialogs\QuestionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SuccessToastControl.xaml">
+    <Page Include="Views\Components\Toasts\SuccessToastControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GroupChatPage.xaml">
+    <Page Include="Views\GroupChat\GroupChatPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GroupRequestToastControl.xaml">
+    <Page Include="Views\Components\Toasts\GroupRequestToastControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LobbyPage.xaml">
+    <Page Include="Views\Lobby\LobbyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -108,20 +108,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ConnectionController.cs" />
-    <Compile Include="ConnectionPage.xaml.cs">
+    <Compile Include="Controllers\ConnectionController.cs" />
+    <Compile Include="Views\Login\ConnectionPage.xaml.cs">
       <DependentUpon>ConnectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GroupChatController.cs" />
-    <Compile Include="GroupChatPage.xaml.cs">
+    <Compile Include="Controllers\GroupChatController.cs" />
+    <Compile Include="Views\GroupChat\GroupChatPage.xaml.cs">
       <DependentUpon>GroupChatPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LobbyController.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Controllers\LobbyController.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ErrorToastControl.xaml">
+    <Page Include="Views\Components\Toasts\ErrorToastControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,13 +130,13 @@
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Message.cs" />
-    <Compile Include="Network\Connection.cs" />
-    <Compile Include="Network\GroupWebRepository.cs" />
-    <Compile Include="Network\IRepository.cs" />
-    <Compile Include="Network\MessageWebRepository.cs" />
-    <Compile Include="Network\UDPClient.cs" />
-    <Compile Include="Network\UDPClientSocket.cs" />
-    <Compile Include="Network\UserWebRepository.cs" />
+    <Compile Include="Repositories\Network\Connection.cs" />
+    <Compile Include="Repositories\GroupWebRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\MessageWebRepository.cs" />
+    <Compile Include="Repositories\Network\UDPClient.cs" />
+    <Compile Include="Repositories\Network\UDPClientSocket.cs" />
+    <Compile Include="Repositories\UserWebRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -178,5 +178,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
