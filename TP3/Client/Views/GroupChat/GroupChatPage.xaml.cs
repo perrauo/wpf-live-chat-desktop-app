@@ -22,7 +22,7 @@ namespace IFT585_TP3.Client
 
         public string Content => Message.Content;
 
-        public string Username => Message.Username;
+        public string Username => Message.SenderUsername;
     }
 
     public enum SexType { Male, Female };
@@ -153,7 +153,7 @@ namespace IFT585_TP3.Client
             SendMessage(new Model.Message()
             {
                 Content = _messageInputTextBox.Text,
-                Username = _connection.Username
+                SenderUsername = _connection.Username
 
             });
         }
@@ -167,7 +167,7 @@ namespace IFT585_TP3.Client
             SendMessage(new Model.Message()
             {
                 Content = _messageInputTextBox.Text,
-                Username = _connection.Username
+                SenderUsername = _connection.Username
 
             });
         }
