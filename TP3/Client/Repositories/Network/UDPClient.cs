@@ -21,7 +21,6 @@ namespace IFT585_TP3.Client.Network
 
                 },
                 Status = Common.Status.Success
-
             };
         }
     }

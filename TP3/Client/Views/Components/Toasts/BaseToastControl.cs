@@ -23,11 +23,6 @@ namespace IFT585_TP3.Client
     {
         public Action<BaseToastControl> OnRemovedHandler { get; set; }
 
-        static BaseToastControl()
-        {
-            //DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseToastControl), new FrameworkPropertyMetadata(typeof(BaseToastControl)));
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -81,7 +76,6 @@ namespace IFT585_TP3.Client
         {
             var c = (BaseToastControl)d;
             var value = (bool)e.NewValue;
-            //c.IsToastVisible = value;
         }
 
         private void ChangeVisualState()
@@ -95,8 +89,7 @@ namespace IFT585_TP3.Client
             cubicEase.EasingMode = EasingMode.EaseInOut;
 
             da.EasingFunction = cubicEase;
-
-            //da.Completed += (sender, e) => IsToastVisible = false;
+            
             RenderTransform.BeginAnimation(TranslateTransform.YProperty, da);
         }
 
