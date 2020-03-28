@@ -11,6 +11,17 @@ namespace IFT585_TP3.Client
         private Network.GroupWebRepository _groupRepository = new Network.GroupWebRepository();
         private Network.UserWebRepository _userRepository = new Network.UserWebRepository();
 
+        // TODO
+        public bool GroupExists(string groupname)
+        {
+            return false;
+        }
+
+        // TODO
+        public Common.Result<Model.Group> GetGroup(string groupname)
+        {
+            return new Common.Result<Model.Group>();
+        }
 
 
     }

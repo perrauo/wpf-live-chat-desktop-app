@@ -17,6 +17,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--Tool bar-->
         <Grid Grid.Row="0" Background="DarkGray" >
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32">
                 <Button Click="OnGroupAddedButtonClicked" Content="Create a new team" Width="128"/>
@@ -26,6 +27,7 @@
             </DockPanel>
         </Grid>
         
+        <!--Content-->
         <ScrollViewer Grid.Row="1">
             <ListBox                
             HorizontalContentAlignment="Stretch"

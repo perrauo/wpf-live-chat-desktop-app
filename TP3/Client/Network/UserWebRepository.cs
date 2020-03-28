@@ -8,31 +8,31 @@ using IFT585_TP3.Client.Model;
 
 namespace IFT585_TP3.Client.Network
 {
-    public class UserWebRepository : IRepository<User>
+    public class UserWebRepository : IRepository<MemberListItem>
     {
         public Connection Connection => throw new NotImplementedException();
 
-        public User Create(User obj)
+        public MemberListItem Create(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public User Delete(User obj)
+        public MemberListItem Delete(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public User Exists(User obj)
+        public MemberListItem Exists(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public User Retrieve(User obj)
+        public MemberListItem Retrieve(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public User Update(User obj)
+        public MemberListItem Update(MemberListItem obj)
         {
             throw new NotImplementedException();
         }

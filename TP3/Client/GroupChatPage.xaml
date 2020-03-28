@@ -15,100 +15,100 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--Tool bar-->
         <Grid Grid.Row="0" Background="DarkGray" >
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32">
-                <Button Content="Send invite" Width="128"/>
+                <Button Click="OnInviteButtonClicked"  Content="Send invite" Width="128"/>
+                <Button Click="OnKickOutButtonClicked"  Content="Kick out" Width="128"/>
+                <Button Click="OnMakeAdminButtonClicked" Content="Make admin" Width="128"/>
             </DockPanel>
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32">
                 <Button Click="OnLobbyButtonClicked" Content="Return to lobby" Width="128"/>
             </DockPanel>
         </Grid>
-        <Grid Grid.Row="1" Height="265" VerticalAlignment="Bottom" Margin="0,0,0.4,-0.2">
+        <!--Content-->
+        <Grid Grid.Row="1" VerticalAlignment="Stretch" Margin="0,0,0.4,-0.2">
             <Grid x:Name="contentRoot" Margin="70,10,70,10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <Grid x:Name="titleGrid" Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"/>
+                <Grid Grid.Row="0" Margin="0,10,0,5">
+                    <ScrollViewer Name="MemberScrollViewer">
+                        <ListView Name="lvUsers" Background="LightGray">
+                            <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="120" DisplayMemberBinding="{Binding Name}">
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Tag="Name" Click="lvUsersColumnHeader_Click">Name</GridViewColumnHeader>
+                                    </GridViewColumn.Header>
+                                </GridViewColumn>
+                                <GridViewColumn Width="80" DisplayMemberBinding="{Binding Age}">
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Tag="Age" Click="lvUsersColumnHeader_Click">Age</GridViewColumnHeader>
+                                    </GridViewColumn.Header>
+                                </GridViewColumn>
+                                <GridViewColumn Width="80" DisplayMemberBinding="{Binding Sex}">
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Tag="Sex" Click="lvUsersColumnHeader_Click">Sex</GridViewColumnHeader>
+                                    </GridViewColumn.Header>
+                                </GridViewColumn>
+                            </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
                 </Grid>
-                <Grid Name="contentGrid"  Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Margin="0,10,0,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Group:" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Text="GroupName" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="2" Text="Error" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red" />
-                        <TextBlock Grid.Column="3" Text="Username" VerticalAlignment="Center" />
-                        <Button Grid.Column="4" Content="Exit" Margin="10,0,20,0" VerticalAlignment="Center" />
-                    </Grid>
-                    <Grid Grid.Row="1" Margin="0,10,0,5">
-                        <ScrollViewer Name="ChatFeedScrollViewer">
-                            <ListBox                
+                <Grid Grid.Row="1" Margin="0,10,0,5">
+                    <ScrollViewer Name="ChatFeedScrollViewer">
+                        <ListBox                
                         HorizontalContentAlignment="Left"
                         Name="ChatFeedListBox"                 
                         Background="White">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <!--Username section-->
-                                            <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold">
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0}: ">
-                                                        <Binding Path="Username" />
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
-                                            </TextBlock>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <!--Username section-->
+                                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0}: ">
+                                                    <Binding Path="Username" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
 
-                                            <TextBlock Grid.Column="1" HorizontalAlignment="Left">
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0}">
-                                                        <Binding Path="Content" />
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
-                                            </TextBlock>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Left">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0}">
+                                                    <Binding Path="Content" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
 
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                                <ListBox.Items>
-                                    <!--<local:GroupListBoxItem>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.Items>
+                                <!--<local:GroupListBoxItem>
                         <local:GroupListBoxItem.Group>
                             <model:Group NumMembers="56" NumActiveMembers="4" GroupName="Good"/>
                         </local:GroupListBoxItem.Group>
                     </local:GroupListBoxItem>-->
-                                </ListBox.Items>
-                            </ListBox>
-                        </ScrollViewer>
-                    </Grid>
-                    <Grid Grid.Row="2" Margin="0,5,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Name="MessageInputTextBox"  Grid.Column="0" Text="Message" />
-                        <Button Grid.Column="1" Content="Send" Margin="20,0,20,0" Click="OnSendButtonClicked" />
-                    </Grid>
+                            </ListBox.Items>
+                        </ListBox>
+                    </ScrollViewer>
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,5,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Name="MessageInputTextBox"  Grid.Column="0" Text="Message" KeyUp="TextBox_KeyUp" />
+                    <Button Grid.Column="1" Content="Send" Margin="20,0,20,0" Click="OnSendButtonClicked" />
                 </Grid>
             </Grid>
         </Grid>

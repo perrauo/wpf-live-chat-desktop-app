@@ -38,6 +38,10 @@ namespace IFT585_TP3.Client
 
         public const string GroupsListBoxString = "GroupsListBox";
 
+        public const string CreateGroupQuestionString = "Please enter a group name:";
+
+        public const string DefaultGroupNameString = "My Chat Group";
+
 
         public LobbyPage()
         {
@@ -60,6 +64,8 @@ namespace IFT585_TP3.Client
         public void AddGroup(Model.Group group)
         {
             GroupListBoxItem item;
+                //lblName.Text = inputDialog.Answer;
+
             _groupsListBox.Items.Add(item = new GroupListBoxItem()
             {
                 Group = group
@@ -68,12 +74,19 @@ namespace IFT585_TP3.Client
 
         private void OnGroupAddedButtonClicked(object sender, RoutedEventArgs e)
         {
-            AddGroup(new Model.Group()
+
+            QuestionDialog dialog = new QuestionDialog(CreateGroupQuestionString, DefaultGroupNameString);
+            if (dialog.ShowDialog() == true)
             {
-                NumMembers = 48,
-                NumActiveMembers = 7,
-                GroupName = "Hello World"
-            });
+                // TODO verify if group exists
+                if (!_lobbyController.GroupExists(dialog.Answer))
+                {
+                    Model.Group group = new Model.Group() { GroupName = dialog.Answer };                    
+                    group.AdminUsernames.Add(_connection.Username);
+                    group.MemberUsernames.Add(_connection.Username);
+                    AddGroup(group);                    
+                }
+            }
         }
 
         public void OnGroupEnterButtonClicked(object sender, RoutedEventArgs e)

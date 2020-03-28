@@ -27,7 +27,7 @@ namespace IFT585_TP3.Client.Network
             throw new NotImplementedException();
         }
 
-        public Message Retrieve(User obj)
+        public Message Retrieve(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
