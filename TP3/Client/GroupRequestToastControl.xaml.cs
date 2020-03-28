@@ -15,12 +15,30 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace IFT585_TP3.Client
-{  
+{
     public partial class GroupRequestToastControl : BaseToastControl
     {
-        static GroupRequestToastControl()
+        private TextBox _groupNameTextBox = null;
+
+        public GroupRequestToastControl()
         {
-            //DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupRequestToastControl), new FrameworkPropertyMetadata(typeof(GroupRequestToastControl)));
+            InitializeComponent();
+            this.Loaded += OnLoaded;
+        }
+
+        private void OnAcceptButtonClicked(object sender, RoutedEventArgs e)
+        {
+            OnRemovedHandler?.Invoke(this);
+        }
+
+        private void OnDeclineButtonClicked(object sender, RoutedEventArgs e)
+        {
+            OnRemovedHandler?.Invoke(this);
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _groupNameTextBox = Utils.FindChildren(new List<TextBox>(), this).FirstOrDefault();
         }
     }
 

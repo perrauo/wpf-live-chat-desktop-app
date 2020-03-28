@@ -42,14 +42,6 @@ namespace IFT585_TP3.Client
             BaseToastControl toast = null;
             switch (type)
             {
-                case NotificationType.GroupRequest:
-                    toast = new GroupRequestToastControl()
-                    {
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        RenderTransform = new TranslateTransform(),
-                    };
-                    break;
                 case NotificationType.Error:
                     toast = new ErrorToastControl()
                     {
@@ -60,6 +52,16 @@ namespace IFT585_TP3.Client
                     break;
                 case NotificationType.Success:
                     toast = new SuccessToastControl()
+                    {
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        RenderTransform = new TranslateTransform(),
+                        Text = message
+                    };
+                    break;
+
+                case NotificationType.GroupRequest:
+                    toast = new GroupRequestToastControl()
                     {
                         VerticalAlignment = VerticalAlignment.Bottom,
                         HorizontalAlignment = HorizontalAlignment.Center,
@@ -128,13 +130,11 @@ namespace IFT585_TP3.Client
             _groupChatPage.Open(_connection);
         }
 
-        private void notificationButton_Click(object sender, RoutedEventArgs e)
+        private void OnDebugKeyPressed(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            //clear_all();
-            //named.Children.Add(new MainNotificationPage());
-            //named
+            if (e.Key != System.Windows.Input.Key.F1) return;
 
+            NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.GroupRequest, "My Friend's Group");
         }
-
     }
 }

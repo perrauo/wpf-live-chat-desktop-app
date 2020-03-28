@@ -1,26 +1,25 @@
 ﻿<local:BaseToastControl x:Class="IFT585_TP3.Client.GroupRequestToastControl"
-             SnapsToDevicePixels="True"             
-             Width="2"
-             xmlns:local="clr-namespace:IFT585_TP3.Client;assembly="
+             SnapsToDevicePixels="True"                          
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
-             mc:Ignorable="d" 
-             d:DesignHeight="450">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IFT585_TP3.Client"
+             Width="256" 
+             Height="32">
+
     <UserControl.RenderTransform>
         <TranslateTransform />
     </UserControl.RenderTransform>
 
-
-    <Grid Panel.ZIndex="-1000" Background="Gray">
-        <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <TextBlock Margin="4,4,4,4" FontWeight="ExtraBold">Group Request:</TextBlock>
-            <TextBlock Margin="4,4,4,4">GroupName</TextBlock>
+    <Grid Background="#FF398DF7">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock Margin="4,4,4,4" FontWeight="ExtraBold">Group invite:</TextBlock>
+            <TextBlock Name="GroupNameTextBlock" Margin="4,4,4,4">Group Name</TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Click="OnButtonClick" Margin="4,4,4,4">Accept</Button>
-            <Button Margin="4,4,4,4">Decline</Button>
-        </StackPanel>-->
+            <Button Click="OnAcceptButtonClicked" Margin="4,4,4,4">Accept</Button>
+            <Button Click="OnDeclineButtonClicked" Margin="4,4,4,4">Decline</Button>
+        </StackPanel>
     </Grid>
 </local:BaseToastControl>

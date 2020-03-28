@@ -16,7 +16,6 @@ namespace IFT585_TP3.Server
         {
             // Add default admin
             _users.Add("admin", Utils.HashPasswordWithSalt("admin".ToASCII(), Utils.GenerateSalt()));
-
         }
     }
 }
