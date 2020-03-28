@@ -6,3 +6,5 @@
 
 * DO NOT DO:    
     * Admin invites are not necessary, simply make admin
+	
+![](animation-roll.gif)
