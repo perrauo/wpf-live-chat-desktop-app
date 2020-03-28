@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-
 namespace IFT585_TP3.Client
 {
     /// <summary>
@@ -33,7 +32,7 @@ namespace IFT585_TP3.Client
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
             this.Loaded += OnMainWindowLoaded;
         }
 
