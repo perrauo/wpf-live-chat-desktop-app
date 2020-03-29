@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IFT585_TP3.Common;
+using IFT585_TP3.Server.Controller;
 using IFT585_TP3.Server.Framework;
 
 namespace IFT585_TP3.Server
 {    
     public class Program
     {
-        private static int value = 42;
-
         public static Dictionary<string, byte[]> _users = new Dictionary<string, byte[]>();
 
         static void Main(string[] args)
@@ -20,19 +19,15 @@ namespace IFT585_TP3.Server
             // Add default admin
             _users.Add("admin", Utils.HashPasswordWithSalt("admin".ToASCII(), Utils.GenerateSalt()));
 
-            var exampleServer = new Framework.Server();
-            exampleServer.Use(Method.GET, "/api/universe", GetAnswerToTheUniverse);
-            exampleServer.Listen("http://localhost:8080/");
-        }
+            var chatApi = new Framework.Server();
+            // TODO: Add security middleware with a new syntax: chatApi.Use(MiddlewareFunction) to apply it to
+            //       all routes. The security thing will add a root context with the user model in it.
 
-        private static async Task GetAnswerToTheUniverse(Request req, Response res)
-        {
-            await res.Json(new ExampleResponse { Value = value });
-        }
+            UserController.RegisterRoutes(chatApi);
+            GroupController.RegisterRoutes(chatApi);
 
-        private class ExampleResponse
-        {
-            public int Value { get; set; }
+            Console.WriteLine("Server is running, ctrl+c to terminate.");
+            chatApi.Listen("http://localhost:8080/");
         }
     }
 }

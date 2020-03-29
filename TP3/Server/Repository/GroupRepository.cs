@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Client.Model
+namespace IFT585_TP3.Server.Repository
 {
-    public class User
+    class GroupRepository
     {
-        public string Username { get; set; }
+
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Client.Model
+namespace IFT585_TP3.Common.Model
 {
     public class Group
     {
@@ -23,6 +23,5 @@ namespace IFT585_TP3.Client.Model
         public List<string> PendingAdminUsernames { get; set; } = new List<string>();
 
         public List<string> AdminUsernames { get; set; } = new List<string>();
-
     }
 }

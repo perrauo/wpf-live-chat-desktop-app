@@ -46,15 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Group.cs" />
-    <Compile Include="Model\Message.cs" />
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Controller\Context\GroupContext.cs" />
+    <Compile Include="Framework\IContext.cs" />
+    <Compile Include="Controller\GroupController.cs" />
+    <Compile Include="Controller\UserController.cs" />
     <Compile Include="Framework\Method.cs" />
     <Compile Include="Framework\Request.cs" />
     <Compile Include="Framework\Response.cs" />
     <Compile Include="Framework\Server.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\GroupRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

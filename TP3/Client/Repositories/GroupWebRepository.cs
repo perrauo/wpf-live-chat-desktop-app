@@ -1,10 +1,9 @@
-﻿using System;
+﻿using IFT585_TP3.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using IFT585_TP3.Client.Model;
 
 namespace IFT585_TP3.Client.Network
 {

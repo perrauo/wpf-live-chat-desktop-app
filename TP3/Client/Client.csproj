@@ -127,9 +127,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Group.cs" />
-    <Compile Include="Model\User.cs" />
-    <Compile Include="Model\Message.cs" />
     <Compile Include="Repositories\Network\Connection.cs" />
     <Compile Include="Repositories\GroupWebRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />

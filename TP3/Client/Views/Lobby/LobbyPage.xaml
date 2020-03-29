@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:IFT585_TP3.Client"
-      xmlns:model="clr-namespace:IFT585_TP3.Client.Model"
       mc:Ignorable="d" 
       d:DesignHeight="450" 
       d:DesignWidth="800"

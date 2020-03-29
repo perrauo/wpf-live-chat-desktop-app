@@ -11,14 +11,13 @@ namespace IFT585_TP3.Server.Framework
 {
     public class Request
     {
-        private HttpListenerRequest listenerRequest;
-        private NameValueCollection _params;
+        private readonly HttpListenerRequest listenerRequest;
 
         public Request(HttpListenerRequest listenerRequest, List<Tuple<string, int>> paramsTokens)
         {
             this.listenerRequest = listenerRequest;
 
-            _params = new NameValueCollection();
+            Params = new NameValueCollection();
             foreach (var token in paramsTokens)
             {
                 var tokenValue = new Regex("[a-zA-Z0-9-._~\\%]*").Matches(BaseUrl)[token.Item2].Value;
@@ -31,14 +30,13 @@ namespace IFT585_TP3.Server.Framework
             get { return listenerRequest.Url.AbsolutePath; }
         }
 
-        public NameValueCollection Params
-        {
-            get { return _params; }
-        }
+        public NameValueCollection Params { get; }
 
         public NameValueCollection Query
         {
             get { return listenerRequest.QueryString; }
         }
+
+        public IContext Context { get; set; }
     }
 }

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IFT585_TP3.Client.Model;
-
 namespace IFT585_TP3.Client.Network
 {
     public class UserWebRepository : IRepository<MemberListItem>

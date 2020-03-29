@@ -14,18 +14,19 @@ namespace IFT585_TP3.Server.Framework
         private List<RequestHandler> handlers = new List<RequestHandler>();
 
         /// <summary>
-        /// Configure a route handler
+        /// Declare a route handler. 
+        /// The associated middlewares are executed sequentially until a response is sent.
         /// </summary>
         /// <param name="method"></param>
         /// <param name="urlPattern"></param>
-        /// <param name="handler"></param>
-        public void Use(Method method, string urlPattern, Func<Request, Response, Task> handler)
+        /// <param name="Middlewares"></param>
+        public void Use(Method method, string urlPattern, params Func<Request, Response, Task>[] Middlewares)
         {
             handlers.Add(new RequestHandler
             {
                 Method = method,
                 UrlPattern = urlPattern,
-                Handler = handler
+                Middlewares = Middlewares
             });
         }
 
@@ -65,10 +66,20 @@ namespace IFT585_TP3.Server.Framework
                 }
                 else
                 {
-                    await handler.Handler(
-                        new Request(request, handler.ParamsTokens),
-                        new Response(response)
-                    );
+                    var requestWrapper = new Request(request, handler.ParamsTokens);
+                    var responseWrapper = new Response(response);
+
+                    foreach (var middleware in handler.Middlewares)
+                    {
+                        if (responseWrapper.IsClosed)
+                        {
+                            continue;
+                        }
+                        await middleware(
+                            requestWrapper,
+                            responseWrapper
+                        );
+                    }
                 }
             }
         }
@@ -111,7 +122,7 @@ namespace IFT585_TP3.Server.Framework
                         }
                     }
 
-                    _regexString = tokenReplacementRE.Replace(value, "[a-zA-Z0-9-._~\\%]*");
+                    _regexString = "^" + tokenReplacementRE.Replace(value, "[a-zA-Z0-9-._~\\%]*") + "$";
                     _urlPattern = value;
                 }
             }
@@ -130,7 +141,7 @@ namespace IFT585_TP3.Server.Framework
                 }
             }
 
-            public Func<Request, Response, Task> Handler { get; set; }
+            public Func<Request, Response, Task>[] Middlewares { get; set; }
 
             public bool IsMatch(string url)
             {

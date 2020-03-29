@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Client.Model
+namespace IFT585_TP3.Common.Model
 {
     public class User
     {
