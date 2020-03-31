@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Server.Repository
+namespace IFT585_TP3.Common
 {
-    class GroupRepository
+    public interface IDeepClonable<T>
     {
-
+        T DeepClone();
     }
 }

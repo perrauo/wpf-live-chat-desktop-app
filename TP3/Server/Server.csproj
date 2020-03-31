@@ -46,17 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Context\GroupContext.cs" />
-    <Compile Include="Framework\IContext.cs" />
-    <Compile Include="Controller\GroupController.cs" />
-    <Compile Include="Controller\UserController.cs" />
-    <Compile Include="Framework\Method.cs" />
-    <Compile Include="Framework\Request.cs" />
-    <Compile Include="Framework\Response.cs" />
-    <Compile Include="Framework\Server.cs" />
+    <Compile Include="Controllers\Context\GroupContext.cs" />
+    <Compile Include="Repositories\GroupRepositories\IGroupRepository.cs" />
+    <Compile Include="Repositories\MessageRepositories\IMessageRepository.cs" />
+    <Compile Include="Repositories\MessageRepositories\MessageInMemoryRepository.cs" />
+    <Compile Include="Repositories\UserRepositories\IUserRepository.cs" />
+    <Compile Include="Repositories\UserRepositories\UserInMemoryRepository.cs" />
+    <Compile Include="RESTFramework\IContext.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="RESTFramework\Method.cs" />
+    <Compile Include="RESTFramework\Request.cs" />
+    <Compile Include="RESTFramework\Response.cs" />
+    <Compile Include="RESTFramework\Server.cs" />
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\GroupRepository.cs" />
+    <Compile Include="Repositories\Helpers\Id.cs" />
+    <Compile Include="Repositories\InMemoryRepository.cs" />
+    <Compile Include="Repositories\GroupRepositories\GroupInMemoryRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

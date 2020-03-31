@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Server.Framework
+namespace IFT585_TP3.Server.RESTFramework
 {
-    public enum Method
+    public interface IContext
     {
-        GET,
-        POST,
-        PUT,
-        DELETE
+
     }
 }

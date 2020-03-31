@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Server.Framework
+namespace IFT585_TP3.Server.RESTFramework
 {
     public class Server
     {

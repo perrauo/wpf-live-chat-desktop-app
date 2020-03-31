@@ -1,13 +1,13 @@
-﻿using IFT585_TP3.Server.Controller.Context;
-using IFT585_TP3.Server.Framework;
+﻿using IFT585_TP3.Server.Controllers.Context;
+using IFT585_TP3.Server.RESTFramework;
 using System.Threading.Tasks;
-using IFT585_TP3.Common.Model;
+using IFT585_TP3.Server.Model;
 
-namespace IFT585_TP3.Server.Controller
+namespace IFT585_TP3.Server.Controllers
 {
     static public class GroupController
     {
-        static public void RegisterRoutes(Framework.Server server)
+        static public void RegisterRoutes(RESTFramework.Server server)
         {
             server.Use(Method.GET, "/api/group", GetAllForUser);
             server.Use(Method.POST, "/api/group", CreateGroup);
