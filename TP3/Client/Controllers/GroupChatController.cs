@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IFT585_TP3.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace IFT585_TP3.Client
 
         // Moved from LobbyController
         // TODO: Change UML
-        public IEnumerable<Model.User> GetConnectUsers(string groupname)
+        public IEnumerable<User> GetConnectUsers(string groupname)
         {
             return null;
         }

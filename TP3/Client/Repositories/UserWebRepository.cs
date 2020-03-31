@@ -4,40 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IFT585_TP3.Client.Model;
-
 namespace IFT585_TP3.Client.Network
 {
-    public class MessageWebRepository : IRepository<Message>
+    public class UserWebRepository : IRepository<MemberListItem>
     {
         public Connection Connection => throw new NotImplementedException();
 
-        public Message Create(Message obj)
+        public MemberListItem Create(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public Message Delete(Message obj)
+        public MemberListItem Delete(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public Message Exists(Message obj)
+        public MemberListItem Exists(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public Message Retrieve(MemberListItem obj)
+        public MemberListItem Retrieve(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public Message Retrieve(Message obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Message Update(Message obj)
+        public MemberListItem Update(MemberListItem obj)
         {
             throw new NotImplementedException();
         }

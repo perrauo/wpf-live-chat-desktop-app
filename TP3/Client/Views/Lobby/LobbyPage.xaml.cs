@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IFT585_TP3.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace IFT585_TP3.Client
 {
     public class GroupListBoxItem
     {
-        public Model.Group Group { get; set; }
+        public Group Group { get; set; }
 
         public string GroupName => Group.GroupName;
 
@@ -34,7 +35,7 @@ namespace IFT585_TP3.Client
         private LobbyController _lobbyController = new LobbyController();
         private ListBox _groupsListBox;
 
-        public Action<Model.Group> OnEnterGroupChatHandler { get; set; }
+        public Action<Group> OnEnterGroupChatHandler { get; set; }
 
         public const string GroupsListBoxString = "GroupsListBox";
 
@@ -61,7 +62,7 @@ namespace IFT585_TP3.Client
             _groupsListBox = results.Find(item => item.Name.Equals(GroupsListBoxString));
         }
 
-        public void AddGroup(Model.Group group)
+        public void AddGroup(Group group)
         {
             GroupListBoxItem item;
                 //lblName.Text = inputDialog.Answer;
@@ -81,7 +82,7 @@ namespace IFT585_TP3.Client
                 // TODO verify if group exists
                 if (!_lobbyController.GroupExists(dialog.Answer))
                 {
-                    Model.Group group = new Model.Group() { GroupName = dialog.Answer };                    
+                    Group group = new Group() { GroupName = dialog.Answer };                    
                     group.AdminUsernames.Add(_connection.Username);
                     group.MemberUsernames.Add(_connection.Username);
                     AddGroup(group);                    

@@ -1,38 +1,42 @@
-﻿using System;
+﻿using IFT585_TP3.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IFT585_TP3.Client.Model;
-
 namespace IFT585_TP3.Client.Network
 {
-    public class GroupWebRepository : IRepository<Group>
+    public class MessageWebRepository : IRepository<Message>
     {
         public Connection Connection => throw new NotImplementedException();
 
-        public Group Create(Group obj)
+        public Message Create(Message obj)
         {
             throw new NotImplementedException();
         }
 
-        public Group Delete(Group obj)
+        public Message Delete(Message obj)
         {
             throw new NotImplementedException();
         }
 
-        public Group Exists(Group obj)
+        public Message Exists(Message obj)
         {
             throw new NotImplementedException();
         }
 
-        public Group Retrieve(Group obj)
+        public Message Retrieve(MemberListItem obj)
         {
             throw new NotImplementedException();
         }
 
-        public Group Update(Group obj)
+        public Message Retrieve(Message obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Message Update(Message obj)
         {
             throw new NotImplementedException();
         }

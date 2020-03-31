@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IFT585_TP3.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,11 +19,11 @@ namespace IFT585_TP3.Client
 {
     public class ChatFeedListBoxItem
     {
-        public Model.Message Message { get; set; }
+        public Message Message { get; set; }
 
         public string Content => Message.Content;
 
-        public string Username => Message.Username;
+        public string Username => Message.SenderUsername;
     }
 
     public enum SexType { Male, Female };
@@ -86,7 +87,7 @@ namespace IFT585_TP3.Client
         }
 
 
-        public void SendMessage(Model.Message message)
+        public void SendMessage(Message message)
         {
             _chatFeedListBox.Items.Add(new ChatFeedListBoxItem()
             {
@@ -150,10 +151,10 @@ namespace IFT585_TP3.Client
 
         private void OnSendButtonClicked(object sender, RoutedEventArgs e)
         {
-            SendMessage(new Model.Message()
+            SendMessage(new Message()
             {
                 Content = _messageInputTextBox.Text,
-                Username = _connection.Username
+                SenderUsername = _connection.Username
 
             });
         }
@@ -164,10 +165,10 @@ namespace IFT585_TP3.Client
 
             // your event handler here
             e.Handled = true;
-            SendMessage(new Model.Message()
+            SendMessage(new Message()
             {
                 Content = _messageInputTextBox.Text,
-                Username = _connection.Username
+                SenderUsername = _connection.Username
 
             });
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IFT585_TP3.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,9 @@ namespace IFT585_TP3.Client
         }
 
         // TODO
-        public Common.Result<Model.Group> GetGroup(string groupname)
+        public Common.Result<Group> GetGroup(string groupname)
         {
-            return new Common.Result<Model.Group>();
+            return new Common.Result<Group>();
         }
 
 

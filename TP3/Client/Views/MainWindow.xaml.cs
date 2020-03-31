@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IFT585_TP3.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 
 
 namespace IFT585_TP3.Client
@@ -33,7 +33,7 @@ namespace IFT585_TP3.Client
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
             this.Loaded += OnMainWindowLoaded;
         }
 
@@ -123,7 +123,7 @@ namespace IFT585_TP3.Client
             _groupChatPage.Close();            
         }
 
-        public void OnEnterGroupChat(Model.Group group)
+        public void OnEnterGroupChat(Group group)
         {
             _connectionPage.Close();
             _lobbyPage.Close();
