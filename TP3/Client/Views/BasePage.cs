@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IFT585_TP3.Client.NetworkFramework;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,11 +17,11 @@ namespace IFT585_TP3.Client
     /// </summary>
     public class BasePage : Page
     {
-        protected Network.Connection _connection = null;
+        protected Connection _connection = null;
 
         public Action OnLogoutHandler { get; set; }
 
-        public virtual void Open(Network.Connection conn)
+        public virtual void Open(Connection conn)
         {
             Utils.SetEnabled(this, true);
             _connection = conn;

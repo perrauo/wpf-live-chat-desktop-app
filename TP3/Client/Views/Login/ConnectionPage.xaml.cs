@@ -1,8 +1,6 @@
-﻿using System;
+﻿using IFT585_TP3.Client.NetworkFramework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -32,7 +30,7 @@ namespace IFT585_TP3.Client
         private const string RegisterUsernameInputString = "LoginUsernameInput";
         private TextBox _registerUsernameInput;
 
-        public Action<Network.Connection> OnConnectedHandler { get; set; }
+        public Action<Connection> OnConnectedHandler { get; set; }
     
         public ConnectionPage()
         {
@@ -52,7 +50,7 @@ namespace IFT585_TP3.Client
         //When login button is pressed, it tries to login user
         private void OnLoginButtonClicked(object sender, RoutedEventArgs e)
         {
-            Common.Result<Network.Connection> res = _connectionController.Connect(_loginUsernameInput.Text, _loginPasswordInput.Text);
+            Common.Result<Connection> res = _connectionController.Connect(_loginUsernameInput.Text, _loginPasswordInput.Text);
             switch (res.Status)
             {
                 case Common.Status.Login_InvalidPasswordError:

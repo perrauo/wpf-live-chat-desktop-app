@@ -1,10 +1,8 @@
-﻿using IFT585_TP3.Common.Model;
+﻿using IFT585_TP3.Client.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -78,12 +76,6 @@ namespace IFT585_TP3.Client
                 .FirstOrDefault(item => item.Name.Equals(MessageInputTextBoxString));
             _chatFeedScrollViewer = Utils.FindChildren(new List<ScrollViewer>(), this)
                 .FirstOrDefault(item => item.Name.Equals(ChatFeedScrollViewerString));
-
-            //List<MemberListItem> items = new List<MemberListItem>();
-            //items.Add(new MemberListItem() { Username = "John Doe", Age = 42, Sex = SexType.Male });
-            //items.Add(new MemberListItem() { Username = "Jane Doe", Age = 39, Sex = SexType.Female });
-            //items.Add(new MemberListItem() { Username = "Sammy Doe", Age = 13, Sex = SexType.Male });
-            //items.Add(new MemberListItem() { Username = "Donna Doe", Age = 13, Sex = SexType.Female });
         }
 
 
@@ -173,17 +165,13 @@ namespace IFT585_TP3.Client
             });
         }
 
-
         private void OnLobbyButtonClicked(object sender, RoutedEventArgs e)
         {
             OnLobbyHandler?.Invoke();
         }
 
-
-
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
-
 
         private void lvUsersColumnHeader_Click(object sender, RoutedEventArgs e)
         {
