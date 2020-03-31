@@ -5,14 +5,14 @@
 		* le prof a dit qu'il faut lui remettre une version updated des diags avec le code
 	* Interface
 		* [x] Interface - Olivier Perrault
-		* [] Liste des utilisateurs connectees
-	* [] Connection de l'interface
-	* [] Connection UDP
-	* [] Requetes REST
-	* [] Client Side Repo - Charles Lachance
+		* [ ] Liste des utilisateurs connectees
+	* [ ] Connection de l'interface
+	* [ ] Connection UDP
+	* [ ] Requetes REST - Charles Lachance
+	* [ ] Client Side Repo - Charles Lachance
 
-* DO NOT MAKE MASTER PROTECTED
-	* Its anoying
+* MAKE MASTER PROTECTED. OTHERWISE IT'S ANNOYING
+	* It's anoying
 	
 * NOTE:
     * Simulate group invite: `f1`
