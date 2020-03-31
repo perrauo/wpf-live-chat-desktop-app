@@ -1,7 +1,9 @@
 # ift585-tp3
 
 * CHECKLIST
-	* [x] Interface - Olivier Perrault
+	* Interface
+		* [x] Interface - Olivier Perrault
+		* [] Liste des utilisateurs connectees
 	* [] Connection de l'interface
 	* [] Connection UDP
 	* [] Requetes REST
