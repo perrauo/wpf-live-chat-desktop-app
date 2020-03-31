@@ -60,6 +60,9 @@
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Repositories\GroupRepositories\IGroupRepository.cs" />
+    <Compile Include="Repositories\MessageRepositories\IMessageRepository.cs" />
+    <Compile Include="Repositories\UserRepositories\IUserRepository.cs" />
     <Compile Include="Views\Components\Toasts\BaseToastControl.cs" />
     <Compile Include="Views\BasePage.cs" />
     <Compile Include="Views\Components\Dialogs\QuestionDialog.xaml.cs">
@@ -130,13 +133,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repositories\Network\Connection.cs" />
-    <Compile Include="Repositories\GroupWebRepository.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\MessageWebRepository.cs" />
-    <Compile Include="Repositories\Network\UDPClient.cs" />
-    <Compile Include="Repositories\Network\UDPClientSocket.cs" />
-    <Compile Include="Repositories\UserWebRepository.cs" />
+    <Compile Include="NetworkFramework\Connection.cs" />
+    <Compile Include="Repositories\GroupRepositories\GroupWebRepository.cs" />
+    <Compile Include="Repositories\MessageRepositories\MessageWebRepository.cs" />
+    <Compile Include="NetworkFramework\UDPClient.cs" />
+    <Compile Include="NetworkFramework\UDPClientSocket.cs" />
+    <Compile Include="Repositories\UserRepositories\UserWebRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

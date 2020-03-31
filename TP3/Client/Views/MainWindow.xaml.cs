@@ -1,9 +1,7 @@
-﻿using IFT585_TP3.Common.Model;
-using System;
+﻿using IFT585_TP3.Client.NetworkFramework;
+using IFT585_TP3.Client.Model;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -28,7 +26,7 @@ namespace IFT585_TP3.Client
         private LobbyPage _lobbyPage;
         private GroupChatPage _groupChatPage;
         private BaseToastControl _toastControl;
-        private Network.Connection _connection;
+        private Connection _connection;
         private Grid _rootGrid;
 
         public MainWindow()
@@ -115,7 +113,7 @@ namespace IFT585_TP3.Client
             _groupChatPage.Close();
         }
 
-        public void OnConnected(Network.Connection conn)
+        public void OnConnected(Connection conn)
         {
             _connection = conn;
             _connectionPage.Close();

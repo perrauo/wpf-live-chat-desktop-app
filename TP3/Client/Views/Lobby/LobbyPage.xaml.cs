@@ -1,9 +1,6 @@
-﻿using IFT585_TP3.Common.Model;
+﻿using IFT585_TP3.Client.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;

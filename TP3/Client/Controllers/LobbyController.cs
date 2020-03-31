@@ -1,16 +1,14 @@
-﻿using IFT585_TP3.Common.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IFT585_TP3.Client.Model;
+using IFT585_TP3.Client.Repositories.GroupRepositories;
+using IFT585_TP3.Client.Repositories.UserRepositories;
+using IFT585_TP3.Common;
 
 namespace IFT585_TP3.Client
 {
     public class LobbyController
     {
-        private Network.GroupWebRepository _groupRepository = new Network.GroupWebRepository();
-        private Network.UserWebRepository _userRepository = new Network.UserWebRepository();
+        private IGroupRepository _groupRepository;
+        private IUserRepository _userRepository;
 
         // TODO
         public bool GroupExists(string groupname)
@@ -19,9 +17,9 @@ namespace IFT585_TP3.Client
         }
 
         // TODO
-        public Common.Result<Group> GetGroup(string groupname)
+        public Result<Group> GetGroup(string groupname)
         {
-            return new Common.Result<Group>();
+            return new Result<Group>();
         }
 
 
