@@ -11,6 +11,9 @@
 	* [] Requetes REST
 	* [] Client Side Repo - Charles Lachance
 
+* DO NOT MAKE MASTER PROTECTED
+	* Its anoying
+	
 * NOTE:
     * Simulate group invite: `f1`
 
