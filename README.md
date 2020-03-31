@@ -1,6 +1,8 @@
 # ift585-tp3
 
 * CHECKLIST
+	* Mise-a-jour de UML
+		* le prof a dit qu'il faut lui remettre une version updated des diags avec le code
 	* Interface
 		* [x] Interface - Olivier Perrault
 		* [] Liste des utilisateurs connectees
