@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using IFT585_TP3.Common;
 
 namespace IFT585_TP3.Server.Repositories
 {
-    public class InMemoryRepository<EntityType> where EntityType : class
+    public class InMemoryRepository<EntityType> where EntityType : class, IDeepClonable<EntityType>
     {
         protected Dictionary<object, EntityType> entities = new Dictionary<object, EntityType>();
 
@@ -27,22 +28,22 @@ namespace IFT585_TP3.Server.Repositories
         {
             if (idMember.MemberType == MemberTypes.Field)
             {
-                entities.Add(((FieldInfo)idMember).GetValue(toCreate), toCreate);
+                entities.Add(((FieldInfo)idMember).GetValue(toCreate), toCreate.DeepClone());
             }
             else
             {
-                entities.Add(((PropertyInfo)idMember).GetValue(toCreate), toCreate);
+                entities.Add(((PropertyInfo)idMember).GetValue(toCreate), toCreate.DeepClone());
             }
         }
 
         public EntityType Retrieve(object id)
         {
-            return entities.ContainsKey(id) ? entities[id] : null;
+            return entities.ContainsKey(id) ? entities[id].DeepClone() : null;
         }
 
         public IEnumerable<EntityType> RetrieveAll()
         {
-            return entities.Values.ToList();
+            return entities.Values.ToList().ConvertAll(entity => entity.DeepClone());
         }
 
         public void Update(EntityType toUpdate)
@@ -53,7 +54,7 @@ namespace IFT585_TP3.Server.Repositories
                 throw new System.Exception("Tried to update a non-existing entity.");
             }
 
-            entities[id] = toUpdate;
+            entities[id] = toUpdate.DeepClone();
         }
 
         public void Delete(object id)
