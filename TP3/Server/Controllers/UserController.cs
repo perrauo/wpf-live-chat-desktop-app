@@ -1,15 +1,15 @@
-﻿using IFT585_TP3.Server.Framework;
+﻿using IFT585_TP3.Server.RESTFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Server.Controller
+namespace IFT585_TP3.Server.Controllers
 {
     static public class UserController
     {
-        public static void RegisterRoutes(Framework.Server server)
+        public static void RegisterRoutes(RESTFramework.Server server)
         {
             server.Use(Method.GET, "/api/user", GetUsers);
             server.Use(Method.DELETE, "/api/user/:username", DeleteUser);

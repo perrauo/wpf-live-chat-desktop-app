@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IFT585_TP3.Server.Framework
+namespace IFT585_TP3.Server.Repositories
 {
-    public enum Method
+    class GroupRepository
     {
-        GET,
-        POST,
-        PUT,
-        DELETE
+
     }
 }

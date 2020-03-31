@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Views\Components\Toasts\BaseToastControl.cs" />
     <Compile Include="Views\BasePage.cs" />
     <Compile Include="Views\Components\Dialogs\QuestionDialog.xaml.cs">
