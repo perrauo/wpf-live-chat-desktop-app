@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace IFT585_TP3.Server
+namespace IFT585_TP3.Common
 {
     public enum Status
     {
