@@ -14,6 +14,7 @@ namespace IFT585_TP3.Server
             // Add default admin
             _users.Add("admin", Utils.HashPasswordWithSalt("admin".ToASCII(), Utils.GenerateSalt()));
 
+
             var chatApi = new RESTFramework.Server();
             // TODO: Add security middleware with a new syntax: chatApi.Use(MiddlewareFunction) to apply it to
             //       all routes. The security thing will add a root context with the user model in it.
