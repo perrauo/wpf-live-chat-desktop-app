@@ -30,6 +30,16 @@ namespace IFT585_TP3.Server.RESTFramework
             await SendResponse(serialized, "application/json");
         }
 
+        /// <summary>
+        /// Close the request, sending an empty body with status 200.
+        /// </summary>
+        public void Close()
+        {
+            listenerResponse.StatusCode = 200;
+            listenerResponse.Close();
+            IsClosed = true;
+        }
+
         public async Task InternalError(string message)
         {
             await HandleError(500, message);
@@ -57,6 +67,7 @@ namespace IFT585_TP3.Server.RESTFramework
             listenerResponse.ContentType = contentType;
             listenerResponse.ContentEncoding = Encoding.UTF8;
             listenerResponse.ContentLength64 = data.LongLength;
+            listenerResponse.StatusCode = statusCode;
 
             await listenerResponse.OutputStream.WriteAsync(data, 0, data.Length);
             listenerResponse.Close();

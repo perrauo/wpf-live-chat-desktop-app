@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -37,6 +38,15 @@ namespace IFT585_TP3.Server.RESTFramework
             get { return listenerRequest.QueryString; }
         }
 
-        public IContext Context { get; set; }
+        public RootContext Context { get; set; }
+
+        public async Task<T> GetBody<T>()
+        {
+            var data = new byte[listenerRequest.ContentLength64];
+            await listenerRequest.InputStream.ReadAsync(data, 0, data.Length);
+
+            var content = Encoding.UTF8.GetString(data);
+            return JsonConvert.DeserializeObject<T>(content);
+        }
     }
 }

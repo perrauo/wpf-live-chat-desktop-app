@@ -52,7 +52,7 @@
     <Compile Include="Repositories\MessageRepositories\MessageInMemoryRepository.cs" />
     <Compile Include="Repositories\UserRepositories\IUserRepository.cs" />
     <Compile Include="Repositories\UserRepositories\UserInMemoryRepository.cs" />
-    <Compile Include="RESTFramework\IContext.cs" />
+    <Compile Include="RESTFramework\RootContext.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="RESTFramework\Method.cs" />

@@ -1,5 +1,6 @@
 ﻿using IFT585_TP3.Common;
 using IFT585_TP3.Server.Repositories;
+using System;
 
 namespace IFT585_TP3.Server.Model
 {
@@ -10,7 +11,11 @@ namespace IFT585_TP3.Server.Model
 
         public string SenderUsername { get; set; }
 
+        public string GroupName { get; set; }
+
         public string Content { get; set; }
+
+        public DateTime Timestamp { get; set; }
 
         public Message DeepClone()
         {
@@ -18,7 +23,9 @@ namespace IFT585_TP3.Server.Model
             {
                 Id = Id,
                 SenderUsername = SenderUsername,
-                Content = Content
+                GroupName = GroupName,
+                Content = Content,
+                Timestamp = Timestamp
             };
 
             return clone;

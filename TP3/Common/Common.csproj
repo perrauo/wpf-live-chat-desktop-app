@@ -46,6 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDeepClonable.cs" />
+    <Compile Include="Reponses\Group.cs" />
+    <Compile Include="Reponses\GroupListResponse.cs" />
+    <Compile Include="Reponses\Message.cs" />
+    <Compile Include="Reponses\User.cs" />
+    <Compile Include="Reponses\UserListResponse.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
