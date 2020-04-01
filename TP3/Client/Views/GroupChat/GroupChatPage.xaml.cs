@@ -38,7 +38,6 @@ namespace IFT585_TP3.Client
     }
 
 
-
     /// <summary>
     /// Interaction logic for GroupManagementPage.xaml
     /// </summary>

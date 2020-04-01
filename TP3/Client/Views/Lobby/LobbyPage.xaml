@@ -5,12 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:IFT585_TP3.Client"
+      xmlns:microsoft="clr-namespace:System.Windows.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" 
       d:DesignWidth="800"
       Title="LobbyPage" 
       Background="#FF909090">
 
+    <Page.Resources>
+        <microsoft:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -20,10 +24,13 @@
         <Grid Grid.Row="0" Background="DarkGray" >
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32">
                 <Button Click="OnGroupAddedButtonClicked" Content="Create a new team" Width="128"/>
+                <Button Click="OnAdminDeleteUserClicked" Content="(Admin) Delete user" Width="128"/>
+                <Button Click="OnAdminAddUserClicked" Content="(Admin) Add user" Width="128"/>
             </DockPanel>
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32">
                 <Button Click="OnLogoutButtonClicked" Content="Logout" Width="128"/>
             </DockPanel>
+
         </Grid>
         
         <!--Content-->
@@ -50,15 +57,19 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-
-                            <Button Grid.Column="2" Content="Enter" HorizontalAlignment="Stretch" Click="OnGroupEnterButtonClicked"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                <Button Content="Accept" HorizontalAlignment="Stretch" Click="OnGroupAcceptButtonClicked" Visibility="{Binding IsPending, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <Button Content="Decline" HorizontalAlignment="Stretch" Click="OnGroupDeclineButtonClicked" Visibility="{Binding IsPending, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <Button  Content="Enter" HorizontalAlignment="Stretch" Click="OnGroupEnterButtonClicked" Visibility="{Binding IsMember, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.Items>
                     <!--<local:GroupListBoxItem>
                         <local:GroupListBoxItem.Group>
-                            <model:Group NumMembers="56" NumActiveMembers="4" GroupName="Good"/>
+                            --><!--<model:Group NumMembers="56" NumActiveMembers="4" GroupName="Good" _groupRelationship="0"/>--><!--
+
                         </local:GroupListBoxItem.Group>
                     </local:GroupListBoxItem>-->
                 </ListBox.Items>
