@@ -63,6 +63,7 @@
     <Compile Include="Repositories\GroupRepositories\IGroupRepository.cs" />
     <Compile Include="Repositories\MessageRepositories\IMessageRepository.cs" />
     <Compile Include="Repositories\UserRepositories\IUserRepository.cs" />
+    <Compile Include="Views\BooleanToVisibilityConverter.cs" />
     <Compile Include="Views\Components\Toasts\BaseToastControl.cs" />
     <Compile Include="Views\BasePage.cs" />
     <Compile Include="Views\Components\Dialogs\QuestionDialog.xaml.cs">
