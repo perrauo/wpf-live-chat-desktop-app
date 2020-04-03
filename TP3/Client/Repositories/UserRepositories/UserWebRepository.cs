@@ -6,36 +6,41 @@ using System.Collections.Generic;
 
 namespace IFT585_TP3.Client.Repositories.UserRepositories
 {
-    public class UserWebRepository : IUserRepository
+    public class UserWebRepository : AbstractRepository<User>
     {
         private Connection Connection => throw new NotImplementedException();
 
-        public void Create(User toCreate)
+        public void Connect(Connection connection)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(object id)
+        public override void Create(User toCreate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Exists(object id)
+        public override void Delete(object id)
         {
             throw new NotImplementedException();
         }
 
-        public User Retrieve(object id)
+        public override bool Exists(object id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> RetrieveAll()
+        public override User Retrieve(object id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(User toUpdate)
+        public override IEnumerable<User> RetrieveAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(User toUpdate)
         {
             throw new NotImplementedException();
         }

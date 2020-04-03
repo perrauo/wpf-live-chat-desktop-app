@@ -2,7 +2,7 @@
 
 namespace IFT585_TP3.Client.Model
 {
-    public class Group
+    public class Group: IModel
     {
         public string GroupName { get; set; } = "";
 

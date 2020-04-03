@@ -5,36 +5,41 @@ using System.Collections.Generic;
 
 namespace IFT585_TP3.Client.Repositories.MessageRepositories
 {
-    public class MessageWebRepository : IMessageRepository
+    public class MessageWebRepository : AbstractRepository<Message>
     {
         private Connection Connection => throw new NotImplementedException();
 
-        public void Create(Message toCreate)
+        public void Connect(Connection connection)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(object id)
+        public override void Create(Message toCreate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Exists(object id)
+        public override void Delete(object id)
         {
             throw new NotImplementedException();
         }
 
-        public Message Retrieve(object id)
+        public override bool Exists(object id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Message> RetrieveAll()
+        public override Message Retrieve(object id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Message toUpdate)
+        public override IEnumerable<Message> RetrieveAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(Message toUpdate)
         {
             throw new NotImplementedException();
         }

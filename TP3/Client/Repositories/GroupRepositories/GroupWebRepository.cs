@@ -5,36 +5,42 @@ using System.Collections.Generic;
 
 namespace IFT585_TP3.Client.Repositories.GroupRepositories
 {
-    public class GroupWebRepository : IGroupRepository
+    //template for send REST request
+    public class GroupWebRepository : AbstractRepository<Group>
     {
-        private Connection Connection => throw new NotImplementedException();
+        private Connection _connection;
 
-        public void Create(Group toCreate)
+        public  void Connect(Connection connection)
+        {
+            _connection = connection;
+        }
+
+        public override void Create(Group toCreate)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(object id)
+        public override void Delete(object id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Exists(object id)
+        public override bool Exists(object id)
         {
             throw new NotImplementedException();
         }
 
-        public Group Retrieve(object id)
+        public override Group Retrieve(object id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Group> RetrieveAll()
+        public override IEnumerable<Group> RetrieveAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Group toUpdate)
+        public override void Update(Group toUpdate)
         {
             throw new NotImplementedException();
         }
