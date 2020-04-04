@@ -24,19 +24,15 @@ namespace IFT585_TP3.Client
         public string Username => Message.SenderUsername;
     }
 
-    public enum SexType { Male, Female };
 
     public class MemberListItem
     {
         public string Username { get; set; } = "";
 
-        public int Age { get; set; }
+        public bool IsAdmin { get; set; } = false;
 
-        public string Mail { get; set; }
-
-        public SexType Sex { get; set; }
+        public bool IsConnected { get; set; } = false;
     }
-
 
 
     /// <summary>
@@ -64,6 +60,13 @@ namespace IFT585_TP3.Client
         {
             InitializeComponent();
             this.Loaded += OnLoaded;
+
+            lvUsers.Items.Add(new MemberListItem() { Username = "Test User1", IsAdmin = true, IsConnected = false });
+            lvUsers.Items.Add(new MemberListItem() { Username = "Test User2", IsAdmin = true, IsConnected = true });
+            lvUsers.Items.Add(new MemberListItem() { Username = "Test User2", IsAdmin = false, IsConnected = false });
+            lvUsers.Items.Add(new MemberListItem() { Username = "Test User3", IsAdmin = true, IsConnected = true });
+            lvUsers.Items.Add(new MemberListItem() { Username = "Test User4", IsAdmin = true, IsConnected = true });
+            lvUsers.Items.Add(new MemberListItem() { Username = "Test User5", IsAdmin = true, IsConnected = true });
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

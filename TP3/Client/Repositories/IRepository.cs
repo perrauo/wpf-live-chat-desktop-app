@@ -41,11 +41,6 @@ namespace IFT585_TP3.Client.Repositories
                 _client.DefaultRequestHeaders.Accept.Clear();
             }
         }
-
-        private async Task TaskRunner(Task t)
-        {
-            await t;
-        }
         
         public virtual void Create(T obj)
         {
