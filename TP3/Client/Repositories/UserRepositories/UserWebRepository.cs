@@ -3,44 +3,38 @@ using IFT585_TP3.Client.NetworkFramework;
 using IFT585_TP3.Client.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IFT585_TP3.Client.Repositories.UserRepositories
 {
     public class UserWebRepository : AbstractRepository<User>
     {
-        private Connection Connection => throw new NotImplementedException();
-
-        public void Connect(Connection connection)
+        protected override Task<Uri> CreateTask(User obj)
         {
             throw new NotImplementedException();
         }
 
-        public override void Create(User toCreate)
+        protected override Task<User> RetrieveTask(object id)
         {
             throw new NotImplementedException();
         }
 
-        public override void Delete(object id)
+        protected override Task<IEnumerable<User>> RetrieveAllTask()
         {
             throw new NotImplementedException();
         }
 
-        public override bool Exists(object id)
+        protected override Task<Uri> UpdateTask(User toUpdate)
         {
             throw new NotImplementedException();
         }
 
-        public override User Retrieve(object id)
+        protected override Task<Uri> DeleteTask(object id)
         {
             throw new NotImplementedException();
         }
 
-        public override IEnumerable<User> RetrieveAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(User toUpdate)
+        protected override Task<bool> ExistsTask(object id)
         {
             throw new NotImplementedException();
         }

@@ -2,44 +2,38 @@
 using IFT585_TP3.Client.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IFT585_TP3.Client.Repositories.MessageRepositories
 {
     public class MessageWebRepository : AbstractRepository<Message>
     {
-        private Connection Connection => throw new NotImplementedException();
-
-        public void Connect(Connection connection)
+        protected override Task<Uri> CreateTask(Message obj)
         {
             throw new NotImplementedException();
         }
 
-        public override void Create(Message toCreate)
+        protected override Task<Message> RetrieveTask(object id)
         {
             throw new NotImplementedException();
         }
 
-        public override void Delete(object id)
+        protected override Task<IEnumerable<Message>> RetrieveAllTask()
         {
             throw new NotImplementedException();
         }
 
-        public override bool Exists(object id)
+        protected override Task<Uri> UpdateTask(Message toUpdate)
         {
             throw new NotImplementedException();
         }
 
-        public override Message Retrieve(object id)
+        protected override Task<Uri> DeleteTask(object id)
         {
             throw new NotImplementedException();
         }
 
-        public override IEnumerable<Message> RetrieveAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(Message toUpdate)
+        protected override Task<bool> ExistsTask(object id)
         {
             throw new NotImplementedException();
         }

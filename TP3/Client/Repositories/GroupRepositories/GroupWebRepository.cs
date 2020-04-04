@@ -2,45 +2,50 @@
 using IFT585_TP3.Client.Model;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace IFT585_TP3.Client.Repositories.GroupRepositories
 {
     //template for send REST request
     public class GroupWebRepository : AbstractRepository<Group>
     {
-        private Connection _connection;
-
-        public  void Connect(Connection connection)
+        public GroupWebRepository():base()
         {
-            _connection = connection;
+            
         }
 
-        public override void Create(Group toCreate)
+        protected override async Task<Uri> CreateTask(Group obj)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await _client.PostAsync(
+                "api/products", null);
+            response.EnsureSuccessStatusCode();
+
+            // return URI of the created resource.
+            return response.Headers.Location;
         }
 
-        public override void Delete(object id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool Exists(object id)
+        protected override Task<Group> RetrieveTask(object id)
         {
             throw new NotImplementedException();
         }
 
-        public override Group Retrieve(object id)
+        protected override Task<IEnumerable<Group>> RetrieveAllTask()
         {
             throw new NotImplementedException();
         }
 
-        public override IEnumerable<Group> RetrieveAll()
+        protected override Task<Uri> UpdateTask(Group toUpdate)
         {
             throw new NotImplementedException();
         }
 
-        public override void Update(Group toUpdate)
+        protected override Task<Uri> DeleteTask(object id)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task<bool> ExistsTask(object id)
         {
             throw new NotImplementedException();
         }
