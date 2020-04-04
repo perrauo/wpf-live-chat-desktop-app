@@ -11,7 +11,13 @@ namespace IFT585_TP3.Server.RESTFramework
     public class Server
     {
         private HttpListener listener;
+        private List<Func<Request, Response, Task>> globalMiddleware = new List<Func<Request, Response, Task>>();
         private List<RequestHandler> handlers = new List<RequestHandler>();
+
+        public void Use(Func<Request, Response, Task> middleware)
+        {
+            globalMiddleware.Add(middleware);
+        }
 
         /// <summary>
         /// Declare a route handler. 
@@ -20,13 +26,13 @@ namespace IFT585_TP3.Server.RESTFramework
         /// <param name="method"></param>
         /// <param name="urlPattern"></param>
         /// <param name="Middlewares"></param>
-        public void Use(Method method, string urlPattern, params Func<Request, Response, Task>[] Middlewares)
+        public void Use(Method method, string urlPattern, params Func<Request, Response, Task>[] middlewares)
         {
             handlers.Add(new RequestHandler
             {
                 Method = method,
                 UrlPattern = urlPattern,
-                Middlewares = Middlewares
+                Middlewares = middlewares
             });
         }
 
@@ -69,16 +75,21 @@ namespace IFT585_TP3.Server.RESTFramework
                     var requestWrapper = new Request(request, handler.ParamsTokens);
                     var responseWrapper = new Response(response);
 
-                    foreach (var middleware in handler.Middlewares)
+                    var middlewares = new List<Func<Request, Response, Task>>();
+                    // execute all global middlewares
+                    middlewares.AddRange(globalMiddleware);
+                    // then the route specific middlewares
+                    middlewares.AddRange(handler.Middlewares);
+
+                    foreach (var middleware in middlewares)
                     {
-                        if (responseWrapper.IsClosed)
+                        if (!responseWrapper.IsClosed)
                         {
-                            continue;
+                            await middleware(
+                                requestWrapper,
+                                responseWrapper
+                            );
                         }
-                        await middleware(
-                            requestWrapper,
-                            responseWrapper
-                        );
                     }
                 }
             }

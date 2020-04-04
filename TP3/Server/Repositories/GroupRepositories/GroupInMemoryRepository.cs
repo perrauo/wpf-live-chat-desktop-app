@@ -2,7 +2,7 @@
 
 namespace IFT585_TP3.Server.Repositories
 {
-    class GroupInMemoryRepository : InMemoryRepository<Group>, IGroupRepository
+    public class GroupInMemoryRepository : InMemoryRepository<Group>, IGroupRepository
     {
 
     }

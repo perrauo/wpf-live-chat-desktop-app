@@ -68,7 +68,13 @@ namespace IFT585_TP3.Client
 
         public const string DefaultGroupNameString = "My Chat Group";
 
+        public const string DefaultUsernameString = "someusername";
 
+        public const string AdminAddUserQuestionString = "Please enter a user name:";
+
+        public const string AdminDeleteUserQuestionString = "Please enter a user name:";
+
+      
         public LobbyPage()
         {
             InitializeComponent();
@@ -115,7 +121,7 @@ namespace IFT585_TP3.Client
 
         private void OnAdminDeleteUserClicked(object sender, RoutedEventArgs e)
         {
-            QuestionDialog dialog = new QuestionDialog(CreateGroupQuestionString, DefaultGroupNameString);
+            QuestionDialog dialog = new QuestionDialog(AdminDeleteUserQuestionString, DefaultUsernameString);
             if (dialog.ShowDialog() == true)
             {
                 // TODO verify if group exists
@@ -132,7 +138,7 @@ namespace IFT585_TP3.Client
         private void OnAdminAddUserClicked(object sender, RoutedEventArgs e)
         {
 
-            QuestionDialog dialog = new QuestionDialog(CreateGroupQuestionString, DefaultGroupNameString);
+            QuestionDialog dialog = new QuestionDialog(AdminAddUserQuestionString, DefaultUsernameString);
             if (dialog.ShowDialog() == true)
             {
                 // TODO verify if group exists

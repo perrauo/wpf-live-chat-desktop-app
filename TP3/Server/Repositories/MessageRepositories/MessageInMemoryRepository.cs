@@ -2,7 +2,7 @@
 
 namespace IFT585_TP3.Server.Repositories.MessageRepositories
 {
-    class MessageInMemoryRepository : InMemoryRepository<Message>, IMessageRepository
+    public class MessageInMemoryRepository : InMemoryRepository<Message>, IMessageRepository
     {
 
     }

@@ -2,7 +2,7 @@
 
 namespace IFT585_TP3.Server.Repositories.UserRepositories
 {
-    class UserInMemoryRepository : InMemoryRepository<User>, IUserRepository
+    public class UserInMemoryRepository : InMemoryRepository<User>, IUserRepository
     {
 
     }
