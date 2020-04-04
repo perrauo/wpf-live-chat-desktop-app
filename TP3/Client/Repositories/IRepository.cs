@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using IFT585_TP3.Client.Model;
 using IFT585_TP3.Client.NetworkFramework;
@@ -96,9 +97,9 @@ namespace IFT585_TP3.Client.Repositories
             return null;
         }
 
-        protected virtual async Task<Uri> DeleteTask(object id)
+        protected virtual async Task<HttpStatusCode> DeleteTask(object id)
         {
-            return null;
+            return HttpStatusCode.Ambiguous;
         }
 
         protected virtual async Task<bool> ExistsTask(object id)

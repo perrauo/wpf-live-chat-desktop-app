@@ -2,6 +2,7 @@
 using IFT585_TP3.Client.Model;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -68,9 +69,11 @@ namespace IFT585_TP3.Client.Repositories.GroupRepositories
             return null;
         }
 
-        protected override Task<Uri> DeleteTask(object id)
+        protected override async Task<HttpStatusCode> DeleteTask(object id)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await _client.DeleteAsync(
+                $"api/products/{id}");
+            return response.StatusCode;
         }
 
         protected override Task<bool> ExistsTask(object id)

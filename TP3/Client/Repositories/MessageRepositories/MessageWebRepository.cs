@@ -2,6 +2,7 @@
 using IFT585_TP3.Client.Model;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace IFT585_TP3.Client.Repositories.MessageRepositories
@@ -28,7 +29,7 @@ namespace IFT585_TP3.Client.Repositories.MessageRepositories
             throw new NotImplementedException();
         }
 
-        protected override Task<Uri> DeleteTask(object id)
+        protected override Task<HttpStatusCode> DeleteTask(object id)
         {
             throw new NotImplementedException();
         }
