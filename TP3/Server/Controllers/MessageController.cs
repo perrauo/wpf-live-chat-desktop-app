@@ -22,9 +22,19 @@ namespace IFT585_TP3.Server.Controllers
             server.Use(Method.POST, "/api/message/:group_name", AddMessage);
         }
 
+        #region Handler
+
         private async Task GetMessages(Request req, Response res)
         {
             var groupName = req.Params.Get("group_name");
+            var group = GroupRepo.Retrieve(groupName);
+
+            if (!group.MemberUsernames.Contains(req.Context.AuthenticatedUser.Username))
+            {
+                await res.Unauthorized($"User is not a member of the requested group.");
+                return;
+            }
+
             var timestamp = req.Query.Get("from");
 
             var fromDate = timestamp == null ? new DateTime() : DateTime.Parse(timestamp, null, DateTimeStyles.RoundtripKind);
@@ -46,6 +56,12 @@ namespace IFT585_TP3.Server.Controllers
         private async Task AddMessage(Request req, Response res)
         {
             var group = GroupRepo.Retrieve(req.Params.Get("group_name"));
+            if (!group.MemberUsernames.Contains(req.Context.AuthenticatedUser.Username))
+            {
+                await res.Unauthorized($"User is not a member of the requested group.");
+                return;
+            }
+
             var message = await req.GetBody<Common.Reponses.Message>();
 
             MessageRepo.Create(new Message()
@@ -55,7 +71,10 @@ namespace IFT585_TP3.Server.Controllers
                 Timestamp = DateTime.Now,
                 SenderUsername = req.Context.AuthenticatedUser.Username
             });
+
+            res.Close();
         }
 
+        #endregion Handler
     }
 }

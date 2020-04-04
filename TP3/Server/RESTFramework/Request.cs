@@ -38,7 +38,7 @@ namespace IFT585_TP3.Server.RESTFramework
             get { return listenerRequest.QueryString; }
         }
 
-        public RootContext Context { get; set; }
+        public RootContext Context { get; set; } = new RootContext();
 
         public async Task<T> GetBody<T>()
         {
@@ -48,5 +48,11 @@ namespace IFT585_TP3.Server.RESTFramework
             var content = Encoding.UTF8.GetString(data);
             return JsonConvert.DeserializeObject<T>(content);
         }
+
+        public NameValueCollection Headers
+        {
+            get { return listenerRequest.Headers; }
+        }
+
     }
 }

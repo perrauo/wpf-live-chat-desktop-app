@@ -33,17 +33,11 @@ namespace IFT585_TP3.Server.Controllers
                 Users = users.Select(_user => new Common.Reponses.User()
                 {
                      Username = _user.Username,
-                     PasswordHash = _user.PasswordHash
+                     LastActivity = _user.LastActivity
                 })
             });
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="req"></param>
-        /// <param name="res"></param>
-        /// <returns></returns>
         private async Task DeleteUser(Request req, Response res)
         {
             var username = req.Params.Get("username");
@@ -53,8 +47,7 @@ namespace IFT585_TP3.Server.Controllers
                 await res.Unauthorized("Action requires admin permission.");
             }
 
-            var userRepo = new UserInMemoryRepository();
-            userRepo.Delete(username);
+            UserRepo.Delete(username);
 
             res.Close();
         }

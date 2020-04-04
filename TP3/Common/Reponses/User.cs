@@ -13,6 +13,6 @@ namespace IFT585_TP3.Common.Reponses
     {
         public string Username { get; set; }
 
-        public string PasswordHash { get; set; }
+        public DateTime LastActivity { get; set; }
     }
 }

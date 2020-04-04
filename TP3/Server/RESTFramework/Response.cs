@@ -60,7 +60,7 @@ namespace IFT585_TP3.Server.RESTFramework
             await SendResponse(message, "text/plain", statusCode);
         }
 
-        private async Task SendResponse(string contentType, string content, int statusCode = 200)
+        private async Task SendResponse(string content, string contentType, int statusCode = 200)
         {
             var data = Encoding.UTF8.GetBytes(content);
 

@@ -16,7 +16,6 @@ namespace IFT585_TP3.Server.Controllers
     {
         public UserInMemoryRepository UserRepo { get; set; }
         public GroupInMemoryRepository GroupRepo { get; set; }
-        public MessageInMemoryRepository MessageRepo { get; set; }
 
         public void RegisterRoutes(RESTFramework.Server server)
         {
@@ -49,15 +48,6 @@ namespace IFT585_TP3.Server.Controllers
             {
                 req.Context = (GroupContext)req.Context;
                 ((GroupContext)req.Context).Group = group;
-            }
-        }
-
-        private async Task VerifyIfMember(Request req, Response res)
-        {
-            var group = ((GroupContext)req.Context).Group;
-            if (!group.MemberUsernames.Contains(req.Context.AuthenticatedUser.Username))
-            {
-                await res.Unauthorized($"User is not a member of the requested group.");
             }
         }
 
@@ -140,7 +130,10 @@ namespace IFT585_TP3.Server.Controllers
         private async Task Invite(Request req, Response res)
         {
             var group = ((GroupContext)req.Context).Group;
+
             group.InvitedUsernames.Add(req.Params.Get("username"));
+            GroupRepo.Update(group);
+
             res.Close();
         }
 
@@ -155,6 +148,7 @@ namespace IFT585_TP3.Server.Controllers
 
             group.InvitedUsernames.Remove(req.Context.AuthenticatedUser.Username);
             group.MemberUsernames.Add(req.Context.AuthenticatedUser.Username);
+            GroupRepo.Update(group);
 
             res.Close();
         }
@@ -169,6 +163,7 @@ namespace IFT585_TP3.Server.Controllers
             }
 
             group.InvitedUsernames.Remove(req.Context.AuthenticatedUser.Username);
+            GroupRepo.Update(group);
 
             res.Close();
         }
@@ -181,6 +176,7 @@ namespace IFT585_TP3.Server.Controllers
             if (!group.AdminUsernames.Contains(newAdmin))
             {
                 group.AdminUsernames.Add(newAdmin);
+                GroupRepo.Update(group);
             }
 
             res.Close();
@@ -200,6 +196,7 @@ namespace IFT585_TP3.Server.Controllers
             if (group.AdminUsernames.Contains(newAdmin))
             {
                 group.AdminUsernames.Remove(newAdmin);
+                GroupRepo.Update(group);
             }
 
             res.Close();
