@@ -98,6 +98,7 @@ namespace IFT585_TP3.Server.Controllers
                 GroupName = newGroup.GroupName
             };
             serverGroup.AdminUsernames.Add(req.Context.AuthenticatedUser.Username);
+            serverGroup.MemberUsernames.Add(req.Context.AuthenticatedUser.Username);
             GroupRepo.Create(serverGroup);
 
             res.Close();
