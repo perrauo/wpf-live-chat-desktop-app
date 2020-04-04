@@ -7,8 +7,8 @@ namespace IFT585_TP3.Client
 {
     public class LobbyController
     {
-        private IGroupRepository _groupRepository;
-        private IUserRepository _userRepository;
+        private GroupWebRepository _groupRepository;
+        private UserWebRepository _userRepository;
 
         // TODO
         public bool GroupExists(string groupname)
@@ -21,7 +21,6 @@ namespace IFT585_TP3.Client
         {
             return new Result<Group>();
         }
-
 
     }
 }
