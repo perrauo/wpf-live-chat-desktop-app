@@ -1,5 +1,9 @@
 # ift585-tp3
 
+* TODO
+	* Commentaires dans le code (see enonce)
+	* 
+
 * CHECKLIST
 	* Mise-a-jour de UML
 		* le prof a dit qu'il faut lui remettre une version updated des diags avec le code

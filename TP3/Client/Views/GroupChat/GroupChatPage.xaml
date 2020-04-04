@@ -39,19 +39,19 @@
                         <ListView Name="lvUsers" Background="LightGray">
                             <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="120" DisplayMemberBinding="{Binding Name}">
+                                <GridViewColumn Width="120" DisplayMemberBinding="{Binding Username}">
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Tag="Name" Click="lvUsersColumnHeader_Click">Name</GridViewColumnHeader>
+                                        <GridViewColumnHeader Tag="Username" Click="lvUsersColumnHeader_Click">Username</GridViewColumnHeader>
                                     </GridViewColumn.Header>
                                 </GridViewColumn>
-                                <GridViewColumn Width="80" DisplayMemberBinding="{Binding Age}">
+                                <GridViewColumn Width="80" DisplayMemberBinding="{Binding IsConnected}">
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Tag="Age" Click="lvUsersColumnHeader_Click">Age</GridViewColumnHeader>
+                                        <GridViewColumnHeader Tag="Connected" Click="lvUsersColumnHeader_Click">Connected</GridViewColumnHeader>
                                     </GridViewColumn.Header>
                                 </GridViewColumn>
-                                <GridViewColumn Width="80" DisplayMemberBinding="{Binding Sex}">
+                                <GridViewColumn Width="80" DisplayMemberBinding="{Binding IsAdmin}">
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Tag="Sex" Click="lvUsersColumnHeader_Click">Sex</GridViewColumnHeader>
+                                        <GridViewColumnHeader Tag="Admin" Click="lvUsersColumnHeader_Click">Admin</GridViewColumnHeader>
                                     </GridViewColumn.Header>
                                 </GridViewColumn>
                             </GridView>
