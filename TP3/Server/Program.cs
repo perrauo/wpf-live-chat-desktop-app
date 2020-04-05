@@ -89,15 +89,8 @@ namespace IFT585_TP3.Server
             chatApi.Listen("http://localhost:8090/"); // TODO: Change to port 80 and figure out how to run it without admin rights.
         }
 
-        
-
         static async Task AttachUser(Request req, Response res)
         {
-            req.Context.AuthenticatedUser = userRepo.Retrieve("admin");
-            req.Context.AuthenticatedUser.LastActivity = DateTime.Now;
-            userRepo.Update(req.Context.AuthenticatedUser);
-
-            /* TODO: uncomment when UDP auth is working !
             var accessToken = req.Headers.Get("x-access-token");
             if (!JWTHelper.Verify(accessToken))
             {
@@ -106,9 +99,13 @@ namespace IFT585_TP3.Server
             }
 
             var username = JWTHelper.ExtractUserFromToken(accessToken);
+            var authUser = userRepo.Retrieve(username);
+            authUser.LastActivity = DateTime.Now;
+            userRepo.Update(authUser);
 
-            req.Context.AuthenticatedUser = userRepo.Retrieve(username);
-            */
+            req.Context.AuthenticatedUser = authUser;
+
+            Console.WriteLine(req);
         }
     }
 }

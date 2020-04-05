@@ -32,6 +32,11 @@ namespace IFT585_TP3.Server.RESTFramework
 
         public static bool Verify(string token)
         {
+            if (string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = new TokenValidationParameters()
             {

@@ -56,5 +56,13 @@ namespace IFT585_TP3.Server.RESTFramework
             get { return listenerRequest.Headers; }
         }
 
+        public override string ToString()
+        {
+            if (Context?.AuthenticatedUser != null)
+            {
+                return $"user: {Context.AuthenticatedUser.Username}, url: {listenerRequest.HttpMethod} {listenerRequest.Url}";
+            }
+            return $"url: {listenerRequest.HttpMethod} {listenerRequest.Url}";
+        }
     }
 }

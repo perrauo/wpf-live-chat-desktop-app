@@ -1,4 +1,5 @@
 ﻿using IFT585_TP3.Common.Reponses;
+using IFT585_TP3.Common.UdpServer;
 using IFT585_TP3.Server.Repositories.UserRepositories;
 using IFT585_TP3.Server.RESTFramework;
 using System;
@@ -55,17 +56,19 @@ namespace IFT585_TP3.Server.Controllers
 
         private async Task CreateUser(Request req, Response res)
         {
-            var newUser = await req.GetBody<Common.Reponses.User>();
+            var credentials = await req.GetBody<Credential>();
 
-            if (UserRepo.Exists(newUser.Username))
+            if (UserRepo.Exists(credentials.userName))
             {
-                await res.BadRequest($"A user already exist with the name {newUser.Username}.");
+                await res.BadRequest($"A user already exist with the name {credentials.userName}.");
             }
 
-            // TODO: The user is created without a password. We need to set it somehow.
+            var salt = PasswordHelper.GenerateSalt();
             UserRepo.Create(new Model.User()
             {
-                Username = newUser.Username
+                Username = credentials.userName,
+                PasswordSalt = salt,
+                PasswordHash = PasswordHelper.Hash(credentials.password, salt)
             });
             res.Close();
         }
