@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IFT585_TP3.Common.UdpServer
-{
-    public class credential
+{ 
+    public class Credential
     {
         public string userName{get; set; }
         public string password { get; set; }

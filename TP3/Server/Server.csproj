@@ -88,7 +88,6 @@
     <Compile Include="Repositories\Helpers\Id.cs" />
     <Compile Include="Repositories\InMemoryRepository.cs" />
     <Compile Include="Repositories\GroupRepositories\GroupInMemoryRepository.cs" />
-    <Compile Include="UdpServer\UDPServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -118,7 +118,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Views\Login\ConnectionPage.xaml.cs">
       <DependentUpon>ConnectionPage.xaml</DependentUpon>
     </Compile>
@@ -140,8 +139,6 @@
     <Compile Include="NetworkFramework\Connection.cs" />
     <Compile Include="Repositories\GroupRepositories\GroupWebRepository.cs" />
     <Compile Include="Repositories\MessageRepositories\MessageWebRepository.cs" />
-    <Compile Include="NetworkFramework\UDPClient.cs" />
-    <Compile Include="NetworkFramework\UDPClientSocket.cs" />
     <Compile Include="Repositories\UserRepositories\UserWebRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

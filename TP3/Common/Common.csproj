@@ -65,6 +65,8 @@
     <Compile Include="Reponses\User.cs" />
     <Compile Include="Reponses\UserListResponse.cs" />
     <Compile Include="UdpServer\credential.cs" />
+    <Compile Include="UdpServer\MessageReceivedEventArgs.cs" />
+    <Compile Include="UdpServer\UDPSocket.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

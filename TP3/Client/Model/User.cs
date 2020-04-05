@@ -11,7 +11,7 @@ namespace IFT585_TP3.Client.Model
         public string PasswordHash { get; set; }
 
 
-        public Boolean validation(credential credentials )
+        public Boolean validation(Credential credentials )
         {
             if (credentials.userName.Equals(this.Username) || credentials.password.Equals(this.PasswordHash))
             {

@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
-
+using System.Net.Sockets;
 
 namespace IFT585_TP3.Client
 {
@@ -21,8 +21,6 @@ namespace IFT585_TP3.Client
     /// </summary>
     public partial class ConnectionPage : BasePage
     {
-        private ConnectionController _connectionController = new ConnectionController();
-
         private string portInput = "PortInput";
         private string remotePortInput = "RemotePortInput";
 
@@ -32,18 +30,12 @@ namespace IFT585_TP3.Client
         private const string LoginPasswordInputString = "LoginPasswordInput";
         private TextBox _loginPasswordInput;
 
-
         private const string RegisterUsernameInputString = "LoginUsernameInput";
         private TextBox _registerUsernameInput;
 
         public Action<Connection> OnConnectedHandler { get; set; }
 
-       
-        
-        private UDPClient mChatClient;
-        credential cossin2;
-
-
+        private UDPSocket _socket = new UDPSocket();
 
 
 
@@ -51,6 +43,9 @@ namespace IFT585_TP3.Client
         {
             InitializeComponent();
             this.Loaded += OnLoaded;
+
+            _socket.MessageReceived += _socket_MessageReceived;
+            _socket.Client("127.0.0.1", 24000);
             
         }
 
@@ -59,42 +54,41 @@ namespace IFT585_TP3.Client
             List<TextBox> results = new List<TextBox>();
             Utils.FindChildren(results, this);
 
-
             _loginUsernameInput = results.Find(item => item.Name.Equals(LoginUsernameInputString));
-            _loginPasswordInput = results.Find(item => item.Name.Equals(LoginPasswordInputString));                     
+            _loginPasswordInput = results.Find(item => item.Name.Equals(LoginPasswordInputString));
         }
 
         //When login button is pressed, it tries to login user
         private void OnLoginButtonClicked(object sender, RoutedEventArgs e)
         {
-            var credentials = new credential();
-            if(mChatClient == null)
-            {
-               
-                mChatClient = new UDPClient(23001, 23000);  
-            }
+            var credentials = new Credential();
+            
             credentials.userName = _loginUsernameInput.Text;
             credentials.password = _loginPasswordInput.Text;
-            var cossin = JsonConvert.SerializeObject(credentials);
-            mChatClient.sendBroadcast(cossin);
+            var json = JsonConvert.SerializeObject(credentials);
 
-            cossin2 = JsonConvert.DeserializeObject<credential>(cossin);
-
-            
-
-
-
-
+            _socket.Send(json);
         }
 
-        public credential GetCredential()
+        private void _socket_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            return cossin2; 
+            // wierd nesting in a lambda expression to bind the 'this' context to the UI thread.
+            this.Dispatcher.Invoke(() =>
+            {
+                if (e.Message == "LOGIN_ERROR")
+                {
+                    NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Error, "No match found for this username and password.");
+                }
+                else
+                {
+                    OnConnectedHandler?.Invoke(new Connection
+                    {
+                        Username = _loginUsernameInput.Text,
+                        AccessToken = e.Message
+                    });
+                }
+            });
         }
 
-        
-
-
-       
     }
 }
