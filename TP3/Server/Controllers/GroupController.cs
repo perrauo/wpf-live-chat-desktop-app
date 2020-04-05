@@ -46,8 +46,7 @@ namespace IFT585_TP3.Server.Controllers
             }
             else
             {
-                req.Context = (GroupContext)req.Context;
-                ((GroupContext)req.Context).Group = group;
+                req.Context = new GroupContext(req.Context) { Group = group };
             }
         }
 

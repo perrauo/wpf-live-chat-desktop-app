@@ -6,5 +6,10 @@ namespace IFT585_TP3.Server.Controllers.Context
     public class GroupContext : RootContext
     {
         public Group Group { get; set; }
+
+        public GroupContext(RootContext parentContext)
+        {
+            AuthenticatedUser = parentContext.AuthenticatedUser;
+        }
     }
 }

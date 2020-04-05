@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace IFT585_TP3.Server.RESTFramework
 {
@@ -21,8 +22,9 @@ namespace IFT585_TP3.Server.RESTFramework
             Params = new NameValueCollection();
             foreach (var token in paramsTokens)
             {
-                var tokenValue = new Regex("[a-zA-Z0-9-._~\\%]*").Matches(BaseUrl)[token.Item2].Value;
-                Params.Add(token.Item1, tokenValue);
+                var matches = new Regex("(?!\\/)[a-zA-Z0-9-._~\\%]*").Matches(BaseUrl);
+                var tokenValue = matches[token.Item2].Value;
+                Params.Add(token.Item1, HttpUtility.UrlDecode(tokenValue));
             }
         }
 

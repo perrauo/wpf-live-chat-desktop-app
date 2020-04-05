@@ -120,8 +120,8 @@ namespace IFT585_TP3.Server.RESTFramework
                 }
                 set
                 {
-                    var baseUrlTokenRE = new Regex("[a-zA-Z0-9-._~\\%]*");
-                    var tokenReplacementRE = new Regex(":[a-zA-Z0-9-._~]*");
+                    var baseUrlTokenRE = new Regex("(?!\\/):?[a-zA-Z0-9-._~\\%]*");
+                    var tokenReplacementRE = new Regex("(?!\\/):[a-zA-Z0-9-._~]*");
 
                     var urlTokens = baseUrlTokenRE.Matches(value);
                     for (var index = 0; index < urlTokens.Count; index++)
@@ -133,7 +133,7 @@ namespace IFT585_TP3.Server.RESTFramework
                         }
                     }
 
-                    _regexString = "^" + tokenReplacementRE.Replace(value, "[a-zA-Z0-9-._~\\%]*") + "$";
+                    _regexString = "^" + tokenReplacementRE.Replace(value, "(?!\\/)[a-zA-Z0-9-._~\\%]*") + "$";
                     _urlPattern = value;
                 }
             }
