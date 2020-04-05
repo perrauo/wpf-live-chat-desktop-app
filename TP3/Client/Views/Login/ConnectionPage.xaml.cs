@@ -1,4 +1,5 @@
 ﻿using IFT585_TP3.Client.NetworkFramework;
+using IFT585_TP3.Common.UdpServer;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -10,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
+
 
 namespace IFT585_TP3.Client
 {
@@ -19,6 +22,9 @@ namespace IFT585_TP3.Client
     public partial class ConnectionPage : BasePage
     {
         private ConnectionController _connectionController = new ConnectionController();
+
+        private string portInput = "PortInput";
+        private string remotePortInput = "RemotePortInput";
 
         private const string LoginUsernameInputString = "LoginUsernameInput";
         private TextBox _loginUsernameInput;
@@ -31,17 +37,28 @@ namespace IFT585_TP3.Client
         private TextBox _registerUsernameInput;
 
         public Action<Connection> OnConnectedHandler { get; set; }
-    
+
+       
+        
+        private UDPClient mChatClient;
+        credential cossin2;
+
+
+
+
+
         public ConnectionPage()
         {
             InitializeComponent();
-            this.Loaded += OnLoaded;            
+            this.Loaded += OnLoaded;
+            
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             List<TextBox> results = new List<TextBox>();
             Utils.FindChildren(results, this);
+
 
             _loginUsernameInput = results.Find(item => item.Name.Equals(LoginUsernameInputString));
             _loginPasswordInput = results.Find(item => item.Name.Equals(LoginPasswordInputString));                     
@@ -50,21 +67,34 @@ namespace IFT585_TP3.Client
         //When login button is pressed, it tries to login user
         private void OnLoginButtonClicked(object sender, RoutedEventArgs e)
         {
-            Common.Result<Connection> res = _connectionController.Connect(_loginUsernameInput.Text, _loginPasswordInput.Text);
-            switch (res.Status)
+            var credentials = new credential();
+            if(mChatClient == null)
             {
-                case Common.Status.Login_InvalidPasswordError:
-                case Common.Status.Login_InvalidUsernameError:
-                case Common.Status.Login_AlreadyExistUsernameError:
-                    //TODO
-                    NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Error, NotificationService.UnknownErrorMessage);
-                    return;
-                case Common.Status.Success:
-                    NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Success, NotificationService.LoginSuccessMessage);
-                    OnConnectedHandler?.Invoke(res.Return);
-                    break;
+               
+                mChatClient = new UDPClient(23001, 23000);  
             }
+            credentials.userName = _loginUsernameInput.Text;
+            credentials.password = _loginPasswordInput.Text;
+            var cossin = JsonConvert.SerializeObject(credentials);
+            mChatClient.sendBroadcast(cossin);
+
+            cossin2 = JsonConvert.DeserializeObject<credential>(cossin);
+
+            
+
+
+
+
         }
 
+        public credential GetCredential()
+        {
+            return cossin2; 
+        }
+
+        
+
+
+       
     }
 }

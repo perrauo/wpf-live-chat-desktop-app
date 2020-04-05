@@ -64,6 +64,7 @@
     <Compile Include="Reponses\MessageListReponse.cs" />
     <Compile Include="Reponses\User.cs" />
     <Compile Include="Reponses\UserListResponse.cs" />
+    <Compile Include="UdpServer\credential.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

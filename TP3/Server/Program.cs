@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IFT585_TP3.Common;
+using IFT585_TP3.Server.UdpServer;
 using IFT585_TP3.Server.Controllers;
 using IFT585_TP3.Server.Model;
 using IFT585_TP3.Server.Repositories;
 using IFT585_TP3.Server.Repositories.MessageRepositories;
 using IFT585_TP3.Server.Repositories.UserRepositories;
 using IFT585_TP3.Server.RESTFramework;
+using IFT585_TP3.Common.UdpServer;
 
 namespace IFT585_TP3.Server
 {    
@@ -31,14 +33,34 @@ namespace IFT585_TP3.Server
                 PasswordSalt = adminSalt,
                 PasswordHash = PasswordHelper.Hash("admin", adminSalt)
             });
-
+            //port 8090
             // TODO: Run the UDP server here !
+            UDPServer udpChatClient = new UDPServer(userRepo);
+            udpChatClient.StartReceivingData();
+
+            
 
             Console.WriteLine("Server is running, ctrl+c to terminate.");
             /////////////////////////////////////////////////////////////////////////////////////////////////
             /// /!\ This line must be executed last, it contains an infinite loop running the server. /!\ ///
             /////////////////////////////////////////////////////////////////////////////////////////////////
             InitWebServer();
+        }
+
+         public Boolean validate(credential credentials)
+        {
+            bool valeur = false;
+            var caliss = userRepo.Retrieve(credentials.userName);
+            if(caliss == null)
+            {
+                valeur = false;
+                Console.WriteLine("Cet identifiant n'existe pas");
+            }
+            else if(PasswordHelper.Hash(credentials.password, caliss.PasswordSalt) == caliss.PasswordHash)
+            {
+                valeur =true ; 
+            }
+            return valeur; 
         }
 
         static void InitWebServer()
@@ -58,6 +80,8 @@ namespace IFT585_TP3.Server
 
             chatApi.Listen("http://localhost:8090/");
         }
+
+        
 
         static async Task AttachUser(Request req, Response res)
         {

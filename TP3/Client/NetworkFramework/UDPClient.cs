@@ -77,7 +77,7 @@ namespace IFT585_TP3.Client.NetworkFramework
             }
         }
 
-        private void sendCompletedCallBack(object sender, SocketAsyncEventArgs e)
+        public void sendCompletedCallBack(object sender, SocketAsyncEventArgs e)
         {
             Console.WriteLine($"Data sent sucessfully to {e.RemoteEndPoint}");
 
@@ -88,7 +88,7 @@ namespace IFT585_TP3.Client.NetworkFramework
 
         }
 
-        private void ReceivedTextFromServer(string expedtedValue, IPEndPoint IPEPReceiverLocal)
+        public void ReceivedTextFromServer(string expedtedValue, IPEndPoint IPEPReceiverLocal)
         {
             if (IPEPReceiverLocal == null)
             {
@@ -108,7 +108,7 @@ namespace IFT585_TP3.Client.NetworkFramework
             m_SockBroadcastSender.ReceiveFromAsync(saeaSendConfirmation);
         }
 
-        private void ReceiveConfirmationCompleted(object sender, SocketAsyncEventArgs e)
+        public void ReceiveConfirmationCompleted(object sender, SocketAsyncEventArgs e)
         {
             if (e.BytesTransferred == 0)
             {
@@ -127,6 +127,37 @@ namespace IFT585_TP3.Client.NetworkFramework
             {
                 Console.WriteLine("Expected text not received.");
             }
+        }
+
+        public void sendMessageToKnownServer(string message)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(message))
+                {
+                    return; 
+                }
+
+                var bytesToSend = Encoding.ASCII.GetBytes(message);
+                SocketAsyncEventArgs saea = new SocketAsyncEventArgs();
+                saea.SetBuffer(bytesToSend, 0, bytesToSend.Length);
+                saea.RemoteEndPoint = mChatServerEp;
+
+                saea.UserToken = message;
+                saea.Completed += SendMessageToKnownServerCallBack;
+
+                m_SockBroadcastSender.SendToAsync(saea);
+
+            }
+            catch(Exception excp)
+            {
+                Console.WriteLine(excp.ToString());
+            }
+        }
+
+        private void SendMessageToKnownServerCallBack(object sender, SocketAsyncEventArgs e)
+        {
+            Console.WriteLine($"Sent : {e.UserToken}{Environment.NewLine}Server : {e.RemoteEndPoint}");
         }
     }
 }
