@@ -12,5 +12,6 @@ namespace IFT585_TP3.Client.NetworkFramework
         }
         public string Username { get; set; }
         public string AccessToken { get; set; }
+        public string URL { get; set; }
     }
 }

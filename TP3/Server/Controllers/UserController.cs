@@ -16,8 +16,23 @@ namespace IFT585_TP3.Server.Controllers
         public void RegisterRoutes(RESTFramework.Server server)
         {
             server.Use(Method.GET, "/api/user", GetUsers);
-            server.Use(Method.DELETE, "/api/user/:username", DeleteUser);
+            server.Use(Method.POST, "/api/user", VerifyIfSuperAdmin, CreateUser);
+            server.Use(Method.DELETE, "/api/user/:username", VerifyIfSuperAdmin, DeleteUser);
         }
+
+        #region Middlewares
+
+        private async Task VerifyIfSuperAdmin(Request req, Response res)
+        {
+            if (req.Context.AuthenticatedUser.Username != "admin")
+            {
+                await res.Unauthorized("Action requires admin permission.");
+            }
+        }
+
+        #endregion Middlewares
+
+        #region Handlers
 
         /// <summary>
         /// Return the list of all users.
@@ -38,18 +53,29 @@ namespace IFT585_TP3.Server.Controllers
             });
         }
 
-        private async Task DeleteUser(Request req, Response res)
+        private async Task CreateUser(Request req, Response res)
         {
-            var username = req.Params.Get("username");
-            
-            if (req.Context.AuthenticatedUser.Username != "admin")
+            var newUser = await req.GetBody<Common.Reponses.User>();
+
+            if (UserRepo.Exists(newUser.Username))
             {
-                await res.Unauthorized("Action requires admin permission.");
+                await res.BadRequest($"A user already exist with the name {newUser.Username}.");
             }
 
-            UserRepo.Delete(username);
-
+            // TODO: The user is created without a password. We need to set it somehow.
+            UserRepo.Create(new Model.User()
+            {
+                Username = newUser.Username
+            });
             res.Close();
         }
+
+        private async Task DeleteUser(Request req, Response res)
+        {
+            UserRepo.Delete(req.Params.Get("username"));
+            res.Close();
+        }
+
+        #endregion Handlers
     }
 }

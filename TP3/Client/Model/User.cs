@@ -4,7 +4,7 @@ using System;
 
 namespace IFT585_TP3.Client.Model
 {
-    public class User
+    public class User: IModel
     {
         public string Username { get; set; }
 

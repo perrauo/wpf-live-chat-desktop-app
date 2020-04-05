@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,12 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Repositories\GroupRepositories\IGroupRepository.cs" />
-    <Compile Include="Repositories\MessageRepositories\IMessageRepository.cs" />
-    <Compile Include="Repositories\UserRepositories\IUserRepository.cs" />
-    <Compile Include="Views\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Views\Components\Toasts\BaseToastControl.cs" />
     <Compile Include="Views\BasePage.cs" />
     <Compile Include="Views\Components\Dialogs\QuestionDialog.xaml.cs">

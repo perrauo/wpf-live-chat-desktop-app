@@ -8,8 +8,8 @@ namespace IFT585_TP3.Client
 {
     public class GroupChatController
     {
-        private IGroupRepository _groupRepository;
-        private IMessageRepository _messageRepository;
+        private GroupWebRepository _groupRepository;
+        private MessageWebRepository _messageRepository;
 
         public Result<object> SendGroupInvite(string groupname)
         {

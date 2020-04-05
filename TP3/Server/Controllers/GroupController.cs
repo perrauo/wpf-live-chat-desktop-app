@@ -70,16 +70,20 @@ namespace IFT585_TP3.Server.Controllers
 
             var groups = GroupRepo.RetrieveAll().ToList().FindAll(_group => _group.MemberUsernames.Contains(authUsername));
 
+            var oneMinuteAgo = DateTime.Now.Subtract(new TimeSpan(0, 1, 0));
+            var onlineUsers = UserRepo.RetrieveAll()
+                .ToList()
+                .FindAll(_user => _user.LastActivity > oneMinuteAgo)
+                .Select(_user => _user.Username);
             await res.Json(new Common.Reponses.GroupListResponse()
             {
                 Groups = groups.Select(_group => new Common.Reponses.Group()
                 {
                     AdminUsernames = _group.AdminUsernames,
-                    ConnectedUsernames = _group.ConnectedUsernames,
+                    ConnectedUsernames = _group.MemberUsernames.FindAll(_user => onlineUsers.Contains(_user)),
                     GroupName = _group.GroupName,
                     InvitedUsernames = _group.InvitedUsernames,
-                    MemberUsernames = _group.MemberUsernames,
-                    PendingAdminUsernames = _group.PendingAdminUsernames
+                    MemberUsernames = _group.MemberUsernames
                 })
             });
         }
@@ -98,6 +102,7 @@ namespace IFT585_TP3.Server.Controllers
                 GroupName = newGroup.GroupName
             };
             serverGroup.AdminUsernames.Add(req.Context.AuthenticatedUser.Username);
+            serverGroup.MemberUsernames.Add(req.Context.AuthenticatedUser.Username);
             GroupRepo.Create(serverGroup);
 
             res.Close();
