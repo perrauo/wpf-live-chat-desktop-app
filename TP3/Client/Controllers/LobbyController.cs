@@ -1,25 +1,42 @@
-﻿using IFT585_TP3.Client.Model;
-using IFT585_TP3.Client.Repositories.GroupRepositories;
-using IFT585_TP3.Client.Repositories.UserRepositories;
-using IFT585_TP3.Common;
+﻿using IFT585_TP3.Client.Controllers;
+using IFT585_TP3.Client.NetworkFramework;
+using IFT585_TP3.Common.Reponses;
+using IFT585_TP3.Common.UdpServer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace IFT585_TP3.Client
+namespace IFT585_TP3.Client.Controllers
 {
-    public class LobbyController
+    public class LobbyController : Controller
     {
-        private GroupWebRepository _groupRepository;
-        private UserWebRepository _userRepository;
+        public LobbyController(Connection connection) : base(connection) { }
 
-        // TODO
-        public bool GroupExists(string groupname)
+        public async Task<Result<GroupListResponse>> GetGroups()
         {
-            return false;
+            return await Get<GroupListResponse>("/api/group");
         }
 
-        // TODO
-        public Result<Group> GetGroup(string groupname)
+        public async Task<Result> CreateGroup(Group group)
         {
-            return new Result<Group>();
+            var content = NetworkHelper.WrapContent<Group>(group);
+            return await Post("/api/group", content);
+        }
+
+        public async Task<Result> CreateUser(string username)
+        {
+            var content = NetworkHelper.WrapContent<Credential>(new Credential()
+            {
+                userName = username,
+                password = "a" // TODO: maybe fix that
+            });
+            return await Post("/api/user", content);
+        }
+
+        public async Task<Result> DeleteUser(string username)
+        {
+            return await Delete($"/api/user/{username}");
         }
 
     }

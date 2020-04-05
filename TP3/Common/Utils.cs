@@ -15,6 +15,8 @@ namespace IFT585_TP3.Common
 
         Login_AlreadyExistUsernameError,
 
+        Lobby_alreadyExistsGroup,
+
         Success
     }
 

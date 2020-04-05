@@ -19,18 +19,23 @@ namespace IFT585_TP3.Client
     {
         protected Connection _connection = null;
 
+        protected event EventHandler ViewDisplayed;
+        protected event EventHandler ViewDiscarded;
+
         public Action OnLogoutHandler { get; set; }
 
         public virtual void Open(Connection conn)
         {
             Utils.SetEnabled(this, true);
             _connection = conn;
+            ViewDisplayed?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void Close()
         {
             Utils.SetEnabled(this, false);
             _connection = null;
+            ViewDiscarded?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnLogoutButtonClicked(object sender, RoutedEventArgs e)        

@@ -84,7 +84,8 @@ namespace IFT585_TP3.Client
                     OnConnectedHandler?.Invoke(new Connection
                     {
                         Username = _loginUsernameInput.Text,
-                        AccessToken = e.Message
+                        AccessToken = e.Message,
+                        URL = "http://localhost:8090"
                     });
                 }
             });

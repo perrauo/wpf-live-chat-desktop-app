@@ -1,5 +1,5 @@
 ﻿using IFT585_TP3.Client.NetworkFramework;
-using IFT585_TP3.Client.Model;
+using IFT585_TP3.Common.Reponses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;

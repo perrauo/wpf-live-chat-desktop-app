@@ -1,6 +1,9 @@
-﻿using IFT585_TP3.Client.Model;
+﻿using IFT585_TP3.Client.Controllers;
+using IFT585_TP3.Common.Reponses;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -56,9 +59,10 @@ namespace IFT585_TP3.Client
     /// Interaction logic for LobbyPage.xaml
     /// </summary>
     public partial class LobbyPage : BasePage
-    {        
-        private LobbyController _lobbyController = new LobbyController();
+    {
+        private LobbyController _lobbyController;
         private ListBox _groupsListBox;
+        private Timer _refreshTimer;
 
         public Action<Group> OnEnterGroupChatHandler { get; set; }
 
@@ -79,11 +83,11 @@ namespace IFT585_TP3.Client
         {
             InitializeComponent();
             this.Loaded += OnLoaded;
-        }
+            this.ViewDisplayed += LobbyPage_ViewDisplayed;
+            this.ViewDiscarded += LobbyPage_ViewDiscarded;
 
-        private void PopulateGroupList()
-        {
-            //_groupsListBox.
+            _refreshTimer = new Timer() { Interval = 5000 };
+            _refreshTimer.Elapsed += _refreshTimer_Elapsed;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -93,13 +97,39 @@ namespace IFT585_TP3.Client
             _groupsListBox = results.Find(item => item.Name.Equals(GroupsListBoxString));
         }
 
-        public void AddGroup(string username, Group group)
+        private void LobbyPage_ViewDisplayed(object sender, EventArgs e)
         {
-            GroupListBoxItem item;
-            // lblName.Text = inputDialog.Answer;
+            _lobbyController = new LobbyController(_connection);
+            PopulateGroupList();
 
-            _groupsListBox.Items.Add(item = new GroupListBoxItem(username, group));
-  
+            _refreshTimer.Enabled = true;
+        }
+
+        private void LobbyPage_ViewDiscarded(object sender, EventArgs e)
+        {
+            _refreshTimer.Enabled = false;
+        }
+
+        private void _refreshTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                PopulateGroupList();
+            });
+        }
+
+        private async Task PopulateGroupList()
+        {
+            _groupsListBox.Items.Clear();
+
+            var result = await _lobbyController.GetGroups();
+            if (result.IsSuccess)
+            {
+                foreach (var group in result.Value.Groups)
+                {
+                    _groupsListBox.Items.Add(new GroupListBoxItem(_connection.Username, group));
+                }
+            }
         }
 
         private void OnGroupAddedButtonClicked(object sender, RoutedEventArgs e)
@@ -107,15 +137,20 @@ namespace IFT585_TP3.Client
             QuestionDialog dialog = new QuestionDialog(CreateGroupQuestionString, DefaultGroupNameString);
             if (dialog.ShowDialog() == true)
             {
-                // TODO verify if group exists
-                if (!_lobbyController.GroupExists(dialog.Answer))
-                {
-                    Group group = new Group() { GroupName = dialog.Answer };
-                    group.AdminUsernames.Add(_connection.Username);
-                    group.MemberUsernames.Add(_connection.Username);
-                    //group.InvitedUsernames.Add(_connection.Username);
-                    AddGroup(_connection.Username, group);                    
-                }
+                Group group = new Group() { GroupName = dialog.Answer };
+                group.AdminUsernames.Add(_connection.Username);
+                group.MemberUsernames.Add(_connection.Username);
+                group.ConnectedUsernames.Add(_connection.Username);
+                AddGroup(_connection.Username, group);
+            }
+        }
+
+        private async Task AddGroup(string username, Group group)
+        {
+            var result = await _lobbyController.CreateGroup(group);
+            if (result.IsSuccess)
+            {
+                _groupsListBox.Items.Add(new GroupListBoxItem(username, group));
             }
         }
 
@@ -124,15 +159,13 @@ namespace IFT585_TP3.Client
             QuestionDialog dialog = new QuestionDialog(AdminDeleteUserQuestionString, DefaultUsernameString);
             if (dialog.ShowDialog() == true)
             {
-                // TODO verify if group exists
-                //if (!_lobbyController.GroupExists(dialog.Answer))
-                //{
-                //    Group group = new Group() { GroupName = dialog.Answer };
-                //    group.AdminUsernames.Add(_connection.Username);
-                //    group.MemberUsernames.Add(_connection.Username);
-                //    AddGroup(group);
-                //}
+                DeleteUser(dialog.Answer);
             }
+        }
+
+        private async Task DeleteUser(string username)
+        {
+            await _lobbyController.CreateUser(username);
         }
 
         private void OnAdminAddUserClicked(object sender, RoutedEventArgs e)
@@ -141,15 +174,13 @@ namespace IFT585_TP3.Client
             QuestionDialog dialog = new QuestionDialog(AdminAddUserQuestionString, DefaultUsernameString);
             if (dialog.ShowDialog() == true)
             {
-                // TODO verify if group exists
-                //if (!_lobbyController.GroupExists(dialog.Answer))
-                //{
-                //    Group group = new Group() { GroupName = dialog.Answer };
-                //    group.AdminUsernames.Add(_connection.Username);
-                //    group.MemberUsernames.Add(_connection.Username);
-                //    AddGroup(group);
-                //}
+                CreateUser(dialog.Answer);
             }
+        }
+
+        private async Task CreateUser(string username)
+        {
+            await _lobbyController.CreateUser(username);
         }
 
         public void OnGroupEnterButtonClicked(object sender, RoutedEventArgs e)
@@ -171,16 +202,6 @@ namespace IFT585_TP3.Client
             Button button = (Button)sender;
             GroupListBoxItem item = (GroupListBoxItem)button.DataContext;
             OnEnterGroupChatHandler?.Invoke(item.Group);
-        }
-
-        private void ListBoxItem_SourceUpdated(object sender, DataTransferEventArgs e)
-        {
-            
-        }
-
-        private void GroupsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

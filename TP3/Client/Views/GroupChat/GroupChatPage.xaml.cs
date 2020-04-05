@@ -1,4 +1,4 @@
-﻿using IFT585_TP3.Client.Model;
+﻿using IFT585_TP3.Common.Reponses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
