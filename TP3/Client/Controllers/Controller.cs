@@ -106,14 +106,17 @@ namespace IFT585_TP3.Client.Controllers
                 var returnValue = JsonConvert.DeserializeObject<ResultType>(valueString);
                 return new Result<ResultType>()
                 {
-                    IsSuccess = true,
+                    StatusCode = response.StatusCode,
                     Value = returnValue
                 };
             }
             else
             {
-                DisplayError(response.StatusCode, await response.Content.ReadAsStringAsync());
-                return new Result<ResultType>() { IsSuccess = false };
+                if (response.StatusCode != HttpStatusCode.Forbidden)
+                {
+                    DisplayError(response.StatusCode, await response.Content.ReadAsStringAsync());
+                }
+                return new Result<ResultType>() { StatusCode = response.StatusCode };
             }
         }
 
@@ -121,19 +124,19 @@ namespace IFT585_TP3.Client.Controllers
         {
             if (response.IsSuccessStatusCode)
             {
-                return new Result() { IsSuccess = true };
+                return new Result() { StatusCode = response.StatusCode };
             }
             else
             {
                 DisplayError(response.StatusCode, await response.Content.ReadAsStringAsync());
-                return new Result() { IsSuccess = false };
+                return new Result() { StatusCode = response.StatusCode };
             }
         }
 
         private void DisplayError(HttpStatusCode statusCode, string message)
         {
             Console.WriteLine($"[{statusCode}] {message}");
-            NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Error, $"[{statusCode}] {message}");
+            NotificationService.OnNotificationStaticHandler?.Invoke($"[{statusCode}] {message}");
         }
     }
 }

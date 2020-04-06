@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" 
     Background="#FF969696" 
-    d:DesignHeight="264.8" 
-    d:DesignWidth="346.267">
+    d:DesignHeight="300" 
+    d:DesignWidth="750">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -16,16 +16,20 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!--Tool bar-->
-        <Grid Grid.Row="0" Background="DarkGray" >
-            <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32">
+        <Grid Grid.Row="0" Background="DarkGray" Height="32">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Name="AdminActions">
                 <Button Click="OnInviteButtonClicked"  Content="Send invite" Width="128"/>
                 <Button Click="OnKickOutButtonClicked"  Content="Kick out" Width="128"/>
                 <Button Click="OnMakeAdminButtonClicked" Content="Make admin" Width="128"/>
                 <Button Click="OnDeleteGroupButtonClicked" Content="Delete Group" Width="128"/>
-            </DockPanel>
-            <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32">
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Button Click="OnLobbyButtonClicked" Content="Return to lobby" Width="128"/>
-            </DockPanel>
+            </StackPanel>
         </Grid>
         <!--Content-->
         <Grid Grid.Row="1" VerticalAlignment="Stretch" Margin="0,0,0.4,-0.2">
@@ -94,11 +98,6 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                             <ListBox.Items>
-                                <!--<local:GroupListBoxItem>
-                        <local:GroupListBoxItem.Group>
-                            <model:Group NumMembers="56" NumActiveMembers="4" GroupName="Good"/>
-                        </local:GroupListBoxItem.Group>
-                    </local:GroupListBoxItem>-->
                             </ListBox.Items>
                         </ListBox>
                     </ScrollViewer>

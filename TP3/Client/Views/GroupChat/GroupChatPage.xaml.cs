@@ -94,6 +94,8 @@ namespace IFT585_TP3.Client
                 _groupChatController = new GroupChatController(_connection);
             }
 
+            AdminActions.Visibility = Group.AdminUsernames.Contains(_connection.Username) ? Visibility.Visible : Visibility.Collapsed;
+
             _lastMessageUpdate = new DateTime(); // reset the timstamp to fetch all messages
             _chatFeedListBox.Items.Clear();
 
@@ -123,16 +125,25 @@ namespace IFT585_TP3.Client
             if (result.IsSuccess)
             {
                 lvUsers.Items.Clear();
+                Group = result.Value;
 
                 foreach (var member in result.Value.MemberUsernames)
                 {
                     lvUsers.Items.Add(new MemberListItem()
                     {
                         Username = member,
-                        IsAdmin = result.Value.AdminUsernames.Contains(member),
-                        IsConnected = result.Value.ConnectedUsernames.Contains(member)
+                        IsAdmin = Group.AdminUsernames.Contains(member),
+                        IsConnected = Group.ConnectedUsernames.Contains(member)
                     });
                 }
+
+                AdminActions.Visibility = Group.AdminUsernames.Contains(_connection.Username) ? Visibility.Visible : Visibility.Collapsed;
+            }
+            else if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                // The user got kicked out or the group is now deleted. Navigate back to the lobby.
+                OnLobbyHandler?.Invoke();
+                NotificationService.OnNotificationStaticHandler?.Invoke($"You dont have access to this group anymore.");
             }
         }
 
@@ -183,9 +194,17 @@ namespace IFT585_TP3.Client
 
         private void OnDeleteGroupButtonClicked(object sender, RoutedEventArgs e)
         {
-            // TODO   
+            DeleteGroup();
         }
 
+        private async Task DeleteGroup()
+        {
+            var result = await _groupChatController.DeleteGroup(Group.GroupName);
+            if (result.IsSuccess)
+            {
+                OnLobbyHandler?.Invoke();
+            }
+        }
 
         private void OnInviteButtonClicked(object sender, RoutedEventArgs e)
         {

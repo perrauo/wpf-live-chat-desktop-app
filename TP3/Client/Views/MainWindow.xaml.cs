@@ -35,46 +35,19 @@ namespace IFT585_TP3.Client
             this.Loaded += OnMainWindowLoaded;
         }
 
-        public void OnNotification(NotificationType type, string message)
+        public void OnNotification(string message)
         {
-            BaseToastControl toast = null;
-            switch (type)
+            BaseToastControl toast = new ErrorToastControl()
             {
-                case NotificationType.Error:
-                    toast = new ErrorToastControl()
-                    {
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        RenderTransform = new TranslateTransform(),
-                    };
-                    break;
-                case NotificationType.Success:
-                    toast = new SuccessToastControl()
-                    {
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        RenderTransform = new TranslateTransform(),
-                        Text = message
-                    };
-                    break;
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                RenderTransform = new TranslateTransform(),
+                Text = message
+            };
 
-                case NotificationType.GroupRequest:
-                    toast = new GroupRequestToastControl()
-                    {
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        RenderTransform = new TranslateTransform(),
-                        Text = message
-                    };
-                    break;
-            }
-
-            if (toast != null)
-            {
-                toast.Animate();
-                toast.OnRemovedHandler += (x) => _rootGrid.Children.Remove(x);
-                _rootGrid.Children.Add(toast);
-            }
+            toast.Animate();
+            toast.OnRemovedHandler += (x) => _rootGrid.Children.Remove(x);
+            _rootGrid.Children.Add(toast);
         }        
 
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
@@ -129,11 +102,5 @@ namespace IFT585_TP3.Client
             _groupChatPage.Open(_connection);
         }
 
-        private void OnDebugKeyPressed(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key != System.Windows.Input.Key.F1) return;
-
-            NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.GroupRequest, "My Friend's Group");
-        }
     }
 }

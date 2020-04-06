@@ -8,7 +8,6 @@
         Title="MainWindow"
         Height="450"
         Width="800"
-        KeyUp="OnDebugKeyPressed"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!--<ResourceDictionary Source="/ToastStyle.xaml"/>-->

@@ -17,7 +17,6 @@ namespace IFT585_TP3.Server.Controllers
         public void RegisterRoutes(RESTFramework.Server server)
         {
             server.Use(Method.GET, "/api/user", GetUsers);
-            server.Use(Method.POST, "/api/user", VerifyIfSuperAdmin, CreateUser);
             server.Use(Method.DELETE, "/api/user/:username", VerifyIfSuperAdmin, DeleteUser);
         }
 
@@ -52,25 +51,6 @@ namespace IFT585_TP3.Server.Controllers
                      LastActivity = _user.LastActivity
                 })
             });
-        }
-
-        private async Task CreateUser(Request req, Response res)
-        {
-            var credentials = await req.GetBody<Credential>();
-
-            if (UserRepo.Exists(credentials.userName))
-            {
-                await res.BadRequest($"A user already exist with the name {credentials.userName}.");
-            }
-
-            var salt = PasswordHelper.GenerateSalt();
-            UserRepo.Create(new Model.User()
-            {
-                Username = credentials.userName,
-                PasswordSalt = salt,
-                PasswordHash = PasswordHelper.Hash(credentials.password, salt)
-            });
-            res.Close();
         }
 
         private async Task DeleteUser(Request req, Response res)

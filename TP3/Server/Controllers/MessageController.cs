@@ -36,7 +36,7 @@ namespace IFT585_TP3.Server.Controllers
             }
             if (!group.MemberUsernames.Contains(req.Context.AuthenticatedUser.Username))
             {
-                await res.Unauthorized($"User is not a member of the requested group.");
+                await res.Forbidden($"User is not a member of the requested group.");
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace IFT585_TP3.Server.Controllers
             var group = GroupRepo.Retrieve(req.Params.Get("group_name"));
             if (!group.MemberUsernames.Contains(req.Context.AuthenticatedUser.Username))
             {
-                await res.Unauthorized($"User is not a member of the requested group.");
+                await res.Forbidden($"User is not a member of the requested group.");
                 return;
             }
 

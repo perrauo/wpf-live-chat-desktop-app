@@ -23,8 +23,7 @@
         <Grid Grid.Row="0" Background="DarkGray" >
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32">
                 <Button Click="OnGroupAddedButtonClicked" Content="Create a new team" Width="128"/>
-                <Button Click="OnAdminDeleteUserClicked" Content="(Admin) Delete user" Width="128"/>
-                <Button Click="OnAdminAddUserClicked" Content="(Admin) Add user" Width="128"/>
+                <Button Click="OnAdminDeleteUserClicked" Name="DeleteUserBtn" Content="Delete user" Width="128"/>
             </DockPanel>
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32">
                 <Button Click="OnLogoutButtonClicked" Content="Logout" Width="128"/>

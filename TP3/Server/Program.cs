@@ -51,8 +51,13 @@ namespace IFT585_TP3.Server
             var socket = (UDPSocket)sender;
 
             var creds = JsonConvert.DeserializeObject<Credential>(e.Message);
-            if (Validate(creds))
+            if (ValidateCredentials(creds))
             {
+                socket.Respond(e.EndPoint, JWTHelper.Generate(creds.userName));
+            }
+            else if (!userRepo.Exists(creds.userName))
+            {
+                userRepo.Create(new User(creds));
                 socket.Respond(e.EndPoint, JWTHelper.Generate(creds.userName));
             }
             else
@@ -61,7 +66,7 @@ namespace IFT585_TP3.Server
             }
         }
 
-        public static bool Validate(Credential credentials)
+        public static bool ValidateCredentials(Credential credentials)
         {
             var user = userRepo.Retrieve(credentials.userName);
             if (user != null && PasswordHelper.Hash(credentials.password, user.PasswordSalt) == user.PasswordHash)

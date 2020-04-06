@@ -1,4 +1,5 @@
 ﻿using IFT585_TP3.Common;
+using IFT585_TP3.Common.UdpServer;
 using IFT585_TP3.Server.Repositories;
 using System;
 
@@ -14,6 +15,15 @@ namespace IFT585_TP3.Server.Model
         public byte[] PasswordSalt { get; set; }
 
         public DateTime LastActivity { get; set; }
+
+        public User() { }
+        public User(Credential creds)
+        {
+            var adminSalt = PasswordHelper.GenerateSalt();
+            Username = creds.userName;
+            PasswordSalt = adminSalt;
+            PasswordHash = PasswordHelper.Hash(creds.password, adminSalt);
+        }
 
         public User DeepClone()
         {

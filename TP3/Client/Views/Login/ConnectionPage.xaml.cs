@@ -77,7 +77,7 @@ namespace IFT585_TP3.Client
             {
                 if (e.Message == "LOGIN_ERROR")
                 {
-                    NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Error, "No match found for this username and password.");
+                    NotificationService.OnNotificationStaticHandler?.Invoke("No match found for this username and password.");
                 }
                 else
                 {

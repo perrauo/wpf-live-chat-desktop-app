@@ -52,6 +52,11 @@ namespace IFT585_TP3.Server.RESTFramework
 
         public async Task Unauthorized(string message)
         {
+            await HandleError(401, message);
+        }
+
+        public async Task Forbidden(string message)
+        {
             await HandleError(403, message);
         }
 

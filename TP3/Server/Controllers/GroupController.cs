@@ -22,7 +22,7 @@ namespace IFT585_TP3.Server.Controllers
             server.Use(Method.GET, "/api/group", GetAllForUser);
             server.Use(Method.POST, "/api/group", CreateGroup);
 
-            server.Use(Method.GET, "/api/group/:group_name", SetGroupContext, GetOne);
+            server.Use(Method.GET, "/api/group/:group_name", SetGroupContext, VerifyIfMember, GetOne);
             server.Use(Method.DELETE, "/api/group/:group_name", SetGroupContext, VerifyIfAdmin, Delete);
            
             server.Use(Method.POST, "/api/group/:group_name/invitation/:username", SetGroupContext, VerifyIfAdmin, Invite);
@@ -49,6 +49,15 @@ namespace IFT585_TP3.Server.Controllers
             else
             {
                 req.Context = new GroupContext(req.Context) { Group = group };
+            }
+        }
+
+        private async Task VerifyIfMember(Request req, Response res)
+        {
+            var group = ((GroupContext)req.Context).Group;
+            if (!group.MemberUsernames.Contains(req.Context.AuthenticatedUser.Username))
+            {
+                await res.Forbidden($"User is a member of the requested group.");
             }
         }
 

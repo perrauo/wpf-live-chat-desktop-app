@@ -30,7 +30,7 @@ namespace IFT585_TP3.Client
         }
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(BaseToastControl), new PropertyMetadata("Sample Text"));
+            DependencyProperty.Register("Text", typeof(string), typeof(BaseToastControl));
 
         public static readonly DependencyProperty IsToastVisibleProperty =
             DependencyProperty.Register("IsToastVisible", typeof(bool), typeof(BaseToastControl), new PropertyMetadata(false, OnIsToastVisibleChanged));

@@ -5,20 +5,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IFT585_TP3.Client"
-             Width="256" 
-             Height="32">
+             Width="350">
 
     <UserControl.RenderTransform>
         <TranslateTransform />
     </UserControl.RenderTransform>
     
     <Grid Background="#FFFF7676">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <TextBlock Margin="4,4,4,4" FontWeight="ExtraBold">Error:</TextBlock>
-            <TextBlock Margin="4,4,4,4">Error Message</TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Click="OnCloseButtonClicked" Margin="4,4,4,4">Close</Button>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Margin="4,4,4,4" FontWeight="ExtraBold" Grid.Column="0" VerticalAlignment="Center">Error:</TextBlock>
+        <TextBlock Name="ErrorLabel" Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                   Margin="4,4,4,4" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
+        <Button Click="OnCloseButtonClicked" Margin="4,4,4,4" Grid.Column="2" VerticalAlignment="Center">Close</Button>
     </Grid>
 </local:BaseToastControl>

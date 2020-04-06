@@ -103,7 +103,9 @@ namespace IFT585_TP3.Client
             {
                 _lobbyController = new LobbyController(_connection);
             }
-            
+
+            DeleteUserBtn.Visibility = _connection.IsAdmin ? Visibility.Visible : Visibility.Hidden;
+
             PopulateGroupList();
 
             _refreshTimer.Enabled = true;
@@ -169,22 +171,7 @@ namespace IFT585_TP3.Client
 
         private async Task DeleteUser(string username)
         {
-            await _lobbyController.CreateUser(username);
-        }
-
-        private void OnAdminAddUserClicked(object sender, RoutedEventArgs e)
-        {
-
-            QuestionDialog dialog = new QuestionDialog(AdminAddUserQuestionString, DefaultUsernameString);
-            if (dialog.ShowDialog() == true)
-            {
-                CreateUser(dialog.Answer);
-            }
-        }
-
-        private async Task CreateUser(string username)
-        {
-            await _lobbyController.CreateUser(username);
+            await _lobbyController.DeleteUser(username);
         }
 
         public void OnGroupEnterButtonClicked(object sender, RoutedEventArgs e)
