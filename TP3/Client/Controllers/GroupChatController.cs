@@ -1,30 +1,45 @@
 ﻿
-using IFT585_TP3.Common;
+using IFT585_TP3.Client.NetworkFramework;
 using IFT585_TP3.Common.Reponses;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace IFT585_TP3.Client
+namespace IFT585_TP3.Client.Controllers
 {
-    public class GroupChatController
+    public class GroupChatController : Controller
     {
-        public Result<object> SendGroupInvite(string groupname)
+        public GroupChatController(Connection connection) : base(connection) { }
+
+        public async Task<Result<Group>> GetGroup(string groupName)
         {
-            return new Result<object>();
+            return await Get<Group>($"/api/group/{groupName}");
         }
 
-        public void SendAdminRequest(string username) {
+        public async Task<Result<MessageListReponse>> GetMessages(string groupName, DateTime lastUpdate)
+        {
+            return await Get<MessageListReponse>($"/api/message/{groupName}?from={lastUpdate.ToString("o")}");
         }
 
-        public void DeclineAdminRequest(string username)
+        public async Task<Result> SendMessage(Message message)
         {
-
+            var content = NetworkHelper.WrapContent<Message>(message);
+            return await Post($"/api/message/{message.GroupName}", content);
         }
 
-        // Moved from LobbyController
-        // TODO: Change UML
-        public IEnumerable<User> GetConnectUsers(string groupname)
+        public async Task<Result> RemoveUser(string groupName, string username)
         {
-            return null;
+            return await Delete($"/api/group/{groupName}/{username}");
+        }
+
+        public async Task<Result> MakeAdmin(string groupName, string username)
+        {
+            return await Post($"/api/group/{groupName}/admin/{username}");
+        }
+
+        public async Task<Result> InviteUser(string groupName, string username)
+        {
+            return await Post($"/api/group/{groupName}/invitation/{username}");
         }
     }
 }

@@ -39,5 +39,14 @@ namespace IFT585_TP3.Client.Controllers
             return await Delete($"/api/user/{username}");
         }
 
+        public async Task<Result> AcceptGroupInvite(string groupName)
+        {
+            return await Put($"/api/group/{groupName}/invitation");
+        }
+
+        public async Task<Result> RefuseGroupInvite(string groupName)
+        {
+            return await Delete($"/api/group/{groupName}/invitation");
+        }
     }
 }

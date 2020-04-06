@@ -99,7 +99,11 @@ namespace IFT585_TP3.Client
 
         private void LobbyPage_ViewDisplayed(object sender, EventArgs e)
         {
-            _lobbyController = new LobbyController(_connection);
+            if (_lobbyController == null)
+            {
+                _lobbyController = new LobbyController(_connection);
+            }
+            
             PopulateGroupList();
 
             _refreshTimer.Enabled = true;
@@ -194,14 +198,34 @@ namespace IFT585_TP3.Client
         {
             Button button = (Button)sender;
             GroupListBoxItem item = (GroupListBoxItem)button.DataContext;
-            OnEnterGroupChatHandler?.Invoke(item.Group);
+
+            AcceptInvite(item.GroupName);
+        }
+
+        private async Task AcceptInvite(string groupName)
+        {
+            var result = await _lobbyController.AcceptGroupInvite(groupName);
+            if (result.IsSuccess)
+            {
+                PopulateGroupList();
+            }
         }
 
         public void OnGroupDeclineButtonClicked(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             GroupListBoxItem item = (GroupListBoxItem)button.DataContext;
-            OnEnterGroupChatHandler?.Invoke(item.Group);
+
+            RefuseInvite(item.GroupName);
+        }
+
+        private async Task RefuseInvite(string groupName)
+        {
+            var result = await _lobbyController.RefuseGroupInvite(groupName);
+            if (result.IsSuccess)
+            {
+                PopulateGroupList();
+            }
         }
     }
 }

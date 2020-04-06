@@ -28,37 +28,53 @@ namespace IFT585_TP3.Client.Controllers
             }
         }
 
-        protected async Task<Result> Post(string relativeUrl, StringContent content)
+        protected async Task<Result> Post(string relativeUrl, StringContent content = null)
         {
             using (var client = NetworkHelper.GetClient(connection))
             {
+                if (content == null)
+                {
+                    content = new StringContent("");
+                }
                 var response = await client.PostAsync(relativeUrl, content);
                 return await HandleResponse(response);
             }
         }
 
-        protected async Task<Result<ResultType>> Post<ResultType>(string relativeUrl, StringContent content)
+        protected async Task<Result<ResultType>> Post<ResultType>(string relativeUrl, StringContent content = null)
         {
             using (var client = NetworkHelper.GetClient(connection))
             {
+                if (content == null)
+                {
+                    content = new StringContent("");
+                }
                 var response = await client.PostAsync(relativeUrl, content);
                 return await HandleResponse<ResultType>(response);
             }
         }
 
-        protected async Task<Result> Put(string relativeUrl, StringContent content)
+        protected async Task<Result> Put(string relativeUrl, StringContent content = null)
         {
             using (var client = NetworkHelper.GetClient(connection))
             {
+                if (content == null)
+                {
+                    content = new StringContent("");
+                }
                 var response = await client.PutAsync(relativeUrl, content);
                 return await HandleResponse(response);
             }
         }
 
-        protected async Task<Result<ResultType>> Put<ResultType>(string relativeUrl, StringContent content)
+        protected async Task<Result<ResultType>> Put<ResultType>(string relativeUrl, StringContent content = null)
         {
             using (var client = NetworkHelper.GetClient(connection))
             {
+                if (content == null)
+                {
+                    content = new StringContent("");
+                }
                 var response = await client.PutAsync(relativeUrl, content);
                 return await HandleResponse<ResultType>(response);
             }
@@ -116,6 +132,7 @@ namespace IFT585_TP3.Client.Controllers
 
         private void DisplayError(HttpStatusCode statusCode, string message)
         {
+            Console.WriteLine($"[{statusCode}] {message}");
             NotificationService.OnNotificationStaticHandler?.Invoke(NotificationType.Error, $"[{statusCode}] {message}");
         }
     }

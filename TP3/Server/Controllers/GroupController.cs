@@ -24,10 +24,12 @@ namespace IFT585_TP3.Server.Controllers
 
             server.Use(Method.GET, "/api/group/:group_name", SetGroupContext, GetOne);
             server.Use(Method.DELETE, "/api/group/:group_name", SetGroupContext, VerifyIfAdmin, Delete);
-
+           
             server.Use(Method.POST, "/api/group/:group_name/invitation/:username", SetGroupContext, VerifyIfAdmin, Invite);
             server.Use(Method.PUT, "/api/group/:group_name/invitation", SetGroupContext, AcceptInvitation);
             server.Use(Method.DELETE, "/api/group/:group_name/invitation", SetGroupContext, RefuseInvitation);
+
+            server.Use(Method.DELETE, "/api/group/:group_name/:username", SetGroupContext, VerifyIfAdmin, RemoveUser);
 
             server.Use(Method.POST, "/api/group/:group_name/admin/:username", SetGroupContext, VerifyIfAdmin, SetGroupAdmin);
             server.Use(Method.DELETE, "/api/group/:group_name/admin/:username", SetGroupContext, VerifyIfAdmin, RevokeGroupAdmin);
@@ -67,13 +69,11 @@ namespace IFT585_TP3.Server.Controllers
         {
             var authUsername = req.Context.AuthenticatedUser.Username;
 
-            var groups = GroupRepo.RetrieveAll().ToList().FindAll(_group => _group.MemberUsernames.Contains(authUsername));
-
-            var oneMinuteAgo = DateTime.Now.Subtract(new TimeSpan(0, 1, 0));
-            var onlineUsers = UserRepo.RetrieveAll()
+            var groups = GroupRepo.RetrieveAll()
                 .ToList()
-                .FindAll(_user => _user.LastActivity > oneMinuteAgo)
-                .Select(_user => _user.Username);
+                .FindAll(_group => _group.MemberUsernames.Contains(authUsername) || _group.InvitedUsernames.Contains(authUsername));
+
+            var onlineUsers = GetOnlineUsers();
             await res.Json(new Common.Reponses.GroupListResponse()
             {
                 Groups = groups.Select(_group => new Common.Reponses.Group()
@@ -111,23 +111,42 @@ namespace IFT585_TP3.Server.Controllers
         {
             var group = ((GroupContext)req.Context).Group;
 
-            var groupReponse = new Common.Reponses.GroupListResponse();
-            groupReponse.Groups.Append(new Common.Reponses.Group()
+            var onlineUsers = GetOnlineUsers();
+            await res.Json(new Common.Reponses.Group()
             {
                 AdminUsernames = group.AdminUsernames,
-                ConnectedUsernames = group.ConnectedUsernames,
+                ConnectedUsernames = group.MemberUsernames.FindAll(_user => onlineUsers.Contains(_user)),
                 GroupName = group.GroupName,
                 InvitedUsernames = group.InvitedUsernames,
-                MemberUsernames = group.MemberUsernames,
-                PendingAdminUsernames = group.PendingAdminUsernames
+                MemberUsernames = group.MemberUsernames
             });
-
-            await res.Json(groupReponse);
         }
 
         private async Task Delete(Request req, Response res)
         {
             GroupRepo.Delete(req.Params.Get("group_name"));
+            res.Close();
+        }
+
+        private async Task RemoveUser(Request req, Response res)
+        {
+            var group = ((GroupContext)req.Context).Group;
+            var userToRemove = req.Params.Get("username");
+
+            if (!group.MemberUsernames.Contains(userToRemove))
+            {
+                await res.BadRequest($"No user in this grou with the name {userToRemove}.");
+                return;
+            }
+            if (userToRemove == req.Context.AuthenticatedUser.Username)
+            {
+                await res.BadRequest($"You cannot remove yourself from the group.");
+                return;
+            }
+            group.MemberUsernames.Remove(userToRemove);
+            group.AdminUsernames.Remove(userToRemove);
+            GroupRepo.Update(group);
+
             res.Close();
         }
 
@@ -207,5 +226,14 @@ namespace IFT585_TP3.Server.Controllers
         }
 
         #endregion Handler
+
+        private IEnumerable<string> GetOnlineUsers()
+        {
+            var fewSecondsAgo = DateTime.Now.Subtract(new TimeSpan(0, 0, 11));
+            return UserRepo.RetrieveAll()
+                .ToList()
+                .FindAll(_user => _user.LastActivity > fewSecondsAgo)
+                .Select(_user => _user.Username);
+        }
     }
 }

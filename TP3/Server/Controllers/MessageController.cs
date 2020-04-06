@@ -29,6 +29,11 @@ namespace IFT585_TP3.Server.Controllers
             var groupName = req.Params.Get("group_name");
             var group = GroupRepo.Retrieve(groupName);
 
+            if (group == null)
+            {
+                await res.BadRequest($"No group with name {groupName}.");
+                return;
+            }
             if (!group.MemberUsernames.Contains(req.Context.AuthenticatedUser.Username))
             {
                 await res.Unauthorized($"User is not a member of the requested group.");

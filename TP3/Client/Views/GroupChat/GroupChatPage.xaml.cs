@@ -1,8 +1,11 @@
-﻿using IFT585_TP3.Common.Reponses;
+﻿using IFT585_TP3.Client.Controllers;
+using IFT585_TP3.Common.Reponses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -50,23 +53,26 @@ namespace IFT585_TP3.Client
         public const string KickOutQuestionString = "Please enter who you want to kick out:";
         public const string KickoutDefaultString = "My enemy";
 
+        private GroupChatController _groupChatController;
         private ScrollViewer _chatFeedScrollViewer;
         private ListBox _chatFeedListBox;
         private TextBox _messageInputTextBox;
+        private Timer _refreshTimer;
+        private DateTime _lastMessageUpdate = new DateTime();
 
         public Action OnLobbyHandler { get; set; }
+
+        public Group Group { get; set; }
 
         public GroupChatPage()
         {
             InitializeComponent();
             this.Loaded += OnLoaded;
+            this.ViewDisplayed += GroupChatPage_ViewDisplayed;
+            this.ViewDiscarded += GroupChatPage_ViewDiscarded;
 
-            lvUsers.Items.Add(new MemberListItem() { Username = "Test User1", IsAdmin = true, IsConnected = false });
-            lvUsers.Items.Add(new MemberListItem() { Username = "Test User2", IsAdmin = true, IsConnected = true });
-            lvUsers.Items.Add(new MemberListItem() { Username = "Test User2", IsAdmin = false, IsConnected = false });
-            lvUsers.Items.Add(new MemberListItem() { Username = "Test User3", IsAdmin = true, IsConnected = true });
-            lvUsers.Items.Add(new MemberListItem() { Username = "Test User4", IsAdmin = true, IsConnected = true });
-            lvUsers.Items.Add(new MemberListItem() { Username = "Test User5", IsAdmin = true, IsConnected = true });
+            _refreshTimer = new Timer() { Interval = 5000 };
+            _refreshTimer.Elapsed += _refreshTimer_Elapsed;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -81,34 +87,98 @@ namespace IFT585_TP3.Client
                 .FirstOrDefault(item => item.Name.Equals(ChatFeedScrollViewerString));
         }
 
-
-        public void SendMessage(Message message)
+        private void GroupChatPage_ViewDisplayed(object sender, EventArgs e)
         {
-            _chatFeedListBox.Items.Add(new ChatFeedListBoxItem()
+            if (_groupChatController == null)
             {
-                Message = message
-            });
+                _groupChatController = new GroupChatController(_connection);
+            }
 
-            _messageInputTextBox.Text = "";
-            _chatFeedScrollViewer.ScrollToVerticalOffset(int.MaxValue);
+            _lastMessageUpdate = new DateTime(); // reset the timstamp to fetch all messages
+            _chatFeedListBox.Items.Clear();
+
+            PopulateUsers();
+            PopulateMessages();
+
+            _refreshTimer.Enabled = true;
         }
 
+        private void GroupChatPage_ViewDiscarded(object sender, EventArgs e)
+        {
+            _refreshTimer.Enabled = false;
+        }
 
+        private void _refreshTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                PopulateUsers();
+                PopulateMessages();
+            });
+        }
+
+        private async Task PopulateUsers()
+        {
+            var result = await _groupChatController.GetGroup(Group.GroupName);
+            if (result.IsSuccess)
+            {
+                lvUsers.Items.Clear();
+
+                foreach (var member in result.Value.MemberUsernames)
+                {
+                    lvUsers.Items.Add(new MemberListItem()
+                    {
+                        Username = member,
+                        IsAdmin = result.Value.AdminUsernames.Contains(member),
+                        IsConnected = result.Value.ConnectedUsernames.Contains(member)
+                    });
+                }
+            }
+        }
+
+        private async Task PopulateMessages()
+        {
+            var result = await _groupChatController.GetMessages(Group.GroupName, _lastMessageUpdate);
+            _lastMessageUpdate = DateTime.Now;
+            if (result.IsSuccess)
+            {
+                foreach(var message in result.Value.Messages)
+                {
+                    _chatFeedListBox.Items.Add(new ChatFeedListBoxItem()
+                    {
+                        Message = message
+                    });
+                    _chatFeedScrollViewer.ScrollToVerticalOffset(int.MaxValue);
+                }
+            }
+        }
+
+        private async Task SendMessage(string message)
+        {
+            var result = await _groupChatController.SendMessage(new Message()
+            {
+                GroupName = Group.GroupName,
+                Content = message
+            });
+            if (result.IsSuccess)
+            {
+                _messageInputTextBox.Text = "";
+                PopulateMessages();
+            }
+        }
 
         private void OnMakeAdminButtonClicked(object sender, RoutedEventArgs e)
         {
             QuestionDialog dialog = new QuestionDialog(MakeAdminQuestionString, MakeAdminDefaultString);
             if (dialog.ShowDialog() == true)
             {
-                // TODO verify if group exists
-                //if (!_lobbyController.GroupExists(dialog.Answer))
-                //{
-                //    Model.Group group = new Model.Group() { GroupName = dialog.Answer };
-                //    group.AdminUsernames.Add(_connection.Username);
-                //    group.MemberUsernames.Add(_connection.Username);
-                //    AddGroup(group);
-                //}
+                MakeAdmin(dialog.Answer);
             }
+        }
+
+        private async Task MakeAdmin(string username)
+        {
+            await _groupChatController.MakeAdmin(Group.GroupName, username);
         }
 
         private void OnInviteButtonClicked(object sender, RoutedEventArgs e)
@@ -116,15 +186,13 @@ namespace IFT585_TP3.Client
             QuestionDialog dialog = new QuestionDialog(InviteQuestionString, InviteDefaultString);
             if (dialog.ShowDialog() == true)
             {
-                // TODO verify if group exists
-                //if (!_lobbyController.GroupExists(dialog.Answer))
-                //{
-                //    Model.Group group = new Model.Group() { GroupName = dialog.Answer };
-                //    group.AdminUsernames.Add(_connection.Username);
-                //    group.MemberUsernames.Add(_connection.Username);
-                //    AddGroup(group);
-                //}
+                InviteUser(dialog.Answer);
             }
+        }
+
+        private async Task InviteUser(string username)
+        {
+            await _groupChatController.InviteUser(Group.GroupName, username);
         }
 
         private void OnKickOutButtonClicked(object sender, RoutedEventArgs e)
@@ -132,26 +200,22 @@ namespace IFT585_TP3.Client
             QuestionDialog dialog = new QuestionDialog(KickOutQuestionString, KickoutDefaultString);
             if (dialog.ShowDialog() == true)
             {
-                // TODO verify if group exists
-                //if (!_lobbyController.GroupExists(dialog.Answer))
-                //{
-                //    Model.Group group = new Model.Group() { GroupName = dialog.Answer };
-                //    group.AdminUsernames.Add(_connection.Username);
-                //    group.MemberUsernames.Add(_connection.Username);
-                //    AddGroup(group);
-                //}
+                RemoveUser(dialog.Answer);
             }
         }
 
+        private async Task RemoveUser(string username)
+        {
+            var result = await _groupChatController.RemoveUser(Group.GroupName, username);
+            if (result.IsSuccess)
+            {
+                PopulateUsers();
+            }
+        }
 
         private void OnSendButtonClicked(object sender, RoutedEventArgs e)
         {
-            SendMessage(new Message()
-            {
-                Content = _messageInputTextBox.Text,
-                SenderUsername = _connection.Username
-
-            });
+            SendMessage(_messageInputTextBox.Text);
         }
 
         private void TextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -160,12 +224,7 @@ namespace IFT585_TP3.Client
 
             // your event handler here
             e.Handled = true;
-            SendMessage(new Message()
-            {
-                Content = _messageInputTextBox.Text,
-                SenderUsername = _connection.Username
-
-            });
+            SendMessage(_messageInputTextBox.Text);
         }
 
         private void OnLobbyButtonClicked(object sender, RoutedEventArgs e)

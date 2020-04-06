@@ -125,6 +125,7 @@ namespace IFT585_TP3.Client
         {
             _connectionPage.Close();
             _lobbyPage.Close();
+            _groupChatPage.Group = group;
             _groupChatPage.Open(_connection);
         }
 
