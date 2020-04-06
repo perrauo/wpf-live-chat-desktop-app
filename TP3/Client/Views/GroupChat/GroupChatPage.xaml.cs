@@ -111,6 +111,12 @@ namespace IFT585_TP3.Client
             }
         }
 
+        private void OnDeleteGroupButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // TODO   
+        }
+
+
         private void OnInviteButtonClicked(object sender, RoutedEventArgs e)
         {
             QuestionDialog dialog = new QuestionDialog(InviteQuestionString, InviteDefaultString);

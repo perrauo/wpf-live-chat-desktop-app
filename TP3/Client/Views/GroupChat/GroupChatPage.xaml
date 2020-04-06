@@ -21,6 +21,7 @@
                 <Button Click="OnInviteButtonClicked"  Content="Send invite" Width="128"/>
                 <Button Click="OnKickOutButtonClicked"  Content="Kick out" Width="128"/>
                 <Button Click="OnMakeAdminButtonClicked" Content="Make admin" Width="128"/>
+                <Button Click="OnDeleteGroupButtonClicked" Content="Delete Group" Width="128"/>
             </DockPanel>
             <DockPanel Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32">
                 <Button Click="OnLobbyButtonClicked" Content="Return to lobby" Width="128"/>
