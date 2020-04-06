@@ -181,6 +181,12 @@ namespace IFT585_TP3.Client
             await _groupChatController.MakeAdmin(Group.GroupName, username);
         }
 
+        private void OnDeleteGroupButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // TODO   
+        }
+
+
         private void OnInviteButtonClicked(object sender, RoutedEventArgs e)
         {
             QuestionDialog dialog = new QuestionDialog(InviteQuestionString, InviteDefaultString);
