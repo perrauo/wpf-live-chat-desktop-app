@@ -118,7 +118,7 @@ namespace IFT585_TP3.Client
                 PopulateMessages();
             });
         }
-
+        
         private async Task PopulateUsers()
         {
             var result = await _groupChatController.GetGroup(Group.GroupName);

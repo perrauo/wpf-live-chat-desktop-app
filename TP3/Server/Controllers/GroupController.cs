@@ -78,10 +78,7 @@ namespace IFT585_TP3.Server.Controllers
         {
             var authUsername = req.Context.AuthenticatedUser.Username;
 
-            var groups = GroupRepo.RetrieveAll()
-                .ToList()
-                .FindAll(_group => _group.MemberUsernames.Contains(authUsername) || _group.InvitedUsernames.Contains(authUsername));
-
+            var groups = GroupRepo.RetrieveAll();
             var onlineUsers = GetOnlineUsers();
             await res.Json(new Common.Reponses.GroupListResponse()
             {
